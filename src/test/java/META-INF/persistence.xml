@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="uep">
+		<class>com.yichang.uep.model.YConst</class>
+		<class>com.yichang.uep.model.YOrg</class>
+		<class>com.yichang.uep.model.YUser</class>
+		<class>com.yichang.uep.model.YUserPerm</class>
+		<class>com.yichang.uep.model.YAttachment</class>
+		<class>com.yichang.uep.model.YEvent</class>
+	</persistence-unit>
+</persistence>
