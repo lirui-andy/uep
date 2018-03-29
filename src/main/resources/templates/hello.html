@@ -3,6 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
         <title>Hello World!</title>
+        <script type="text/javascript" th:src="@{/jquery.js}"></script>
     </head>
     <body>
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
@@ -11,7 +12,7 @@
         	<input type="file" name="file"/><br/>
         	<input type="file" name="file"/><br/>
         	<input type="file" name="file"/><br/>
-        	事件类型：<input type="text" name="eventType"/><br/>
+        	事件类型：<select name="eventType"></select><br/>
         	处警民警：<input type="text" name="handler"/><br/>
         	<input type="submit" value="upload"/>
         </form>

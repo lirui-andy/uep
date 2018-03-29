@@ -20,11 +20,9 @@ public class EventController {
 		Stream.of(event.getFile())
 		.filter(f -> (f != null && f.getSize() > 0 ) )
 		.forEach(f -> {
-			if(f != null){
-				long size = f.getSize();
-				String name = f.getOriginalFilename();
-				logger.info(name+"  ,size="+size);
-			}
+			long size = f.getSize();
+			String name = f.getOriginalFilename();
+			logger.info(name+"  ,size="+size);
 		});
 		logger.info("EventType="+event.getEventType());
 		return "success";

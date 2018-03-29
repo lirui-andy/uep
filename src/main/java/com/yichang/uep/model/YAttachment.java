@@ -1,8 +1,17 @@
 package com.yichang.uep.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -25,6 +34,12 @@ public class YAttachment implements Serializable {
 
 	@Column(name="event_id")
 	private int eventId;
+
+	@Column(name="file_name")
+	private String fileName;
+
+	@Column(name="file_size")
+	private Long fileSize;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="up_time")
@@ -58,6 +73,22 @@ public class YAttachment implements Serializable {
 
 	public void setEventId(int eventId) {
 		this.eventId = eventId;
+	}
+
+	public String getFileName() {
+		return this.fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Long getFileSize() {
+		return this.fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+		this.fileSize = fileSize;
 	}
 
 	public Date getUpTime() {

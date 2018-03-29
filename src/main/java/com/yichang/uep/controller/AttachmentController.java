@@ -1,5 +1,6 @@
 package com.yichang.uep.controller;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.yichang.uep.model.YAttachment;
+
 @Controller
 public class AttachmentController {
 
@@ -17,16 +20,14 @@ public class AttachmentController {
 	
 	@PostMapping("/upload")
 	@ResponseBody
-	public String upload(@RequestParam("file") MultipartFile[] file){
+	public List<YAttachment> upload(@RequestParam("file") MultipartFile[] file){
 		Stream.of(file)
 		.filter(f -> (f != null && f.getSize() > 0 ) )
 		.forEach(f -> {
-			if(f != null){
 				long size = f.getSize();
 				String name = f.getOriginalFilename();
 				logger.info(name+"  ,size="+size);
-			}
 		});
-		return "success";
+		return null;
 	}
 }

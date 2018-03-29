@@ -7,5 +7,6 @@
 		<class>com.yichang.uep.model.YUserPerm</class>
 		<class>com.yichang.uep.model.YAttachment</class>
 		<class>com.yichang.uep.model.YEvent</class>
+		<class>com.yichang.uep.model.YAttachment</class>
 	</persistence-unit>
 </persistence>
