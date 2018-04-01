@@ -1,0 +1,16 @@
+.login-page{
+	background:#367fa9;
+}
+.login-box-title{
+	background-image: url(../img/jinghui.png);
+	background-repeat: no-repeat;
+	background-size: 3em;
+	padding-left:3em;
+	line-height:1.5em;
+	font-size:1.5em;
+	text-shadow: 0 0 0.2em #fff, -0 -0 0.2em #fff;
+}
+.login-box-body{
+	background: rgba(250,250,250,0.3);
+	box-shadow: 0 0 0.5em #ccc, 0 0 0.5em #ccc;
+}

@@ -1,0 +1,16 @@
+.navbar-brand {
+	padding-left: 120px;
+}
+
+.navbar-brand {
+	margin-top: 0.3em; line-height : 1em;
+	font-size: 2em;
+	text-shadow: 0 0 0.2em #fff, -0 -0 0.2em #fff;
+	line-height: 1em;
+}
+
+.main-header .container {
+	background-image: url(../img/jinghui.png);
+	background-repeat: no-repeat;
+	background-size: 100px;
+}
