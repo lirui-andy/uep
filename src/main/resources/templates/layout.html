@@ -50,22 +50,25 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <script th:src="@{/bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
 <!-- FastClick -->
 <script th:src="@{/bower_components/fastclick/lib/fastclick.js}"></script>
-<!-- AdminLTE App -->
-<script th:src="@{/dist/js/adminlte.min.js}"></script>
-<!-- AdminLTE for demo purposes -->
-<script th:src="@{/dist/js/const.js}"></script>
+
+<script th:src="@{/plugins/input-mask/jquery.inputmask.js}"></script>
+<script th:src="@{/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+
 
 <!-- date-range-picker -->
 <script th:src="@{/bower_components/moment/min/moment.min.js}"></script>
 <script th:src="@{/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
 <!-- bootstrap datepicker -->
-<script th:src="@{/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
-<script th:src="@{/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js}"></script>
+<!-- <script th:src="@{/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script> -->
+<!-- <script th:src="@{/bower_components/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js}"></script> -->
 <!-- bootstrap time picker -->
 <script th:src="@{/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
 <script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
 
-<script th:src="@{/dist/js/uep.js}"></script>
+
+
+<script th:src="@{/js/const.js}"></script>
+<script th:src="@{/js/uep.js}"></script>
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
