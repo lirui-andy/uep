@@ -20,84 +20,77 @@
 							<h3 class="box-title">信息录入</h3>
 						</div>
 						<!-- /.box-header -->
-						<form class="form">
+						<form class="form" th:action="@{/event/save}" method="POST">
 							<div class="box-body">
 								<div class="form-horizontal">
 									<div class="form-group">
 										<label for="input1" class="col-md-2 control-label">类别</label>
 										<div class="col-md-4">
-											<select id="input1" class="form-control no-padding">
-												<option>未知名</option>
-												<option>落水失踪</option>
-												<option>疑似落水</option>
+											<select id="input1" name="eventType" data-constGroup="EVENT_TYPE" class="form-control no-padding">
 											</select>
 										</div>
 	
 										<label for="input2" class="col-md-2 control-label">是否查清</label>
 										<div class="col-md-4">
-											<select id="input2" class="form-control no-padding">
-												<option>未查清</option>
-												<option>已查清</option>
+											<select id="input2" name="checkedClear" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
 											</select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input3" class="col-md-2 control-label">接警单位</label>
 										<div class="col-md-4">
-											<input type="text" id="input3" class="form-control"/>
+											<select id="input3" name="rcvOrgCode" data-constGroup="RECEIVE_EVENT_ORG" class="form-control no-padding"></select>
 										</div>
 										<label for="input4" class="col-md-2 control-label">处警民警</label>
 										<div class="col-md-4">
-											<input type="text" id="input4" class="form-control"/>
+											<input type="text" id="input4" name="handlerName" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input5" class="col-md-2 control-label">报警人</label>
 										<div class="col-md-4">
-											<input type="text" id="input5" class="form-control"/>
+											<input type="text" id="input5" name="reportorName" class="form-control"/>
 										</div>
 										<label for="input6" class="col-md-2 control-label">报警电话</label>
 										<div class="col-md-4">
-											<input type="text" id="input6" class="form-control"/>
+											<input type="text" id="input6" name="reportorTel" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input7" class="col-md-2 control-label">协查单位</label>
 										<div class="col-md-4">
-											<input type="text" id="input7" class="form-control"/>
+											<select id="input7" name="coOrgName" data-constGroup="CO_ORG" class="form-control no-padding"></select>
 										</div>
+										
 										<label for="input8" class="col-md-1 control-label">联系人</label>
 										<div class="col-md-2">
-											<input type="text" id="input8" class="form-control"/>
+											<input type="text" id="input8" name="coOrgContact" class="form-control"/>
 										</div>
 										<label for="input9" class="col-md-1 control-label">电话</label>
 										<div class="col-md-2">
-											<input type="text" id="input9" class="form-control"/>
+											<input type="text" id="input9" name="coOrgTel" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input10" class="col-md-2 control-label">姓名</label>
 										<div class="col-md-4">
-											<input type="text" id="input10" class="form-control"/>
+											<input type="text" id="input10" name="name" class="form-control"/>
 										</div>
 										
-										<label for="input11" class="col-md-1 control-label">性别</label>
+										<label for="gender" class="col-md-1 control-label">性别</label>
 										<div class="col-md-2">
-										<select id="gender" class="form-control no-padding ">
-											<option>男</option>
-											<option>女</option>
-											<option>未知</option>
+										<select id="gender" name="gender" data-constGroup="GENDER" class="form-control no-padding ">
 										</select>
 										</div>
 										<label for="input12" class="col-md-1 control-label">事件时间</label>
 										<div class="col-md-2">
-											<input type="text" id="input12" class="form-control" data-datepicker/>
+											<input type="text" id="input12" name="eventTime" class="form-control" data-datepicker/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input13" class="col-md-2 control-label">身份证号</label>
 										<div class="col-md-4">
-											<input type="text" id="input13" class="form-control"/>
+											<input type="text" id="input13" name="idNum" class="form-control"/>
 										</div>
 										<label for="input14" class="col-md-1 control-label">图片</label>
 										<div class="col-md-4 form-control-static">
@@ -109,11 +102,11 @@
 									<div class="form col-md-11 col-md-offset-1">
 										<div class="form-group">
 											<label for="input15" class="control-label">简要警情:</label>
-												<textarea id="input15" class="form-control" rows="3"></textarea>
+												<textarea id="input15" name="briefInfo" class="form-control" rows="3"></textarea>
 										</div>	
 										<div class="form-group">
 											<label for="input16" class="control-label">人员情况:</label>
-												<textarea id="input16" class="form-control" rows="3"></textarea>
+												<textarea id="input16" name="detailInfo" class="form-control" rows="3"></textarea>
 										</div>
 										<div class="form-group">
 											<label for="" class="control-label">110备注:</label>
@@ -147,9 +140,27 @@
 										</div>		
 									</div>
 								</div>
+								<div class="clearfix"></div>
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label class="control-label col-md-1 col-md-offset-5" for="input20">录入人</label>
+										<div class="col-md-2">
+											<input type="text" id="input20" name="inputRealName" class="form-control"/>
+										</div>
+										<label class="control-label col-md-1" for="input21">审核人</label>
+										<div class="col-md-2">
+											<input type="text" id="input21" name="reviewerName" class="form-control"/>
+										</div>
+									</div>
+								</div>
 
 							</div>
-							<div class="box-footer clearfix"></div>
+							<div class="box-footer clearfix">
+								<div class="row">
+								
+								<input type="submit" value="提交" class="btn btn-primary col-md-1 col-md-offset-5"/>
+								</div>
+							</div>
 						</form>
 					</div>
 					<!-- /.box -->

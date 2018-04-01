@@ -13,29 +13,33 @@ public class EventVO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	MultipartFile[] file;
 	Integer eventId;
-
-	private String briefInfo;
-	private String coOrgContact;
-	private String coOrgName;
-	private String coOrgTel;
-	private String detailInfo;
-	private Date eventTime;
 	private String eventType;
-	private String gender;
-	private String handler;
-	private String idNum;
-	private int inputOrgId;
-	private String inputOrgName;
-	private String inputRealName;
-	private Date inputTime;
-	private int inputUserId;
-	private String inputUserName;
-	private String name;
-	private int orgId;
-	private String reportorName;
-	private String reportorTel;
-	private String reviewerName;
+	
+	private String checkedClear;//是否查清
+	private String rcvOrgCode;//接警单位编码
+	private String rcvOrgName;//接警单位名称
 
+	private String handlerName;//出警民警
+	private String reportorName;//报警人
+	private String reportorTel;//报警电话
+
+	private String coOrgContact;//协查单位联系人
+	private String coOrgName;//协查单位
+	private String coOrgTel;//协查单位电话
+
+	private String name;
+	private String gender;
+	private String eventTime;
+	private String idNum;
+	
+	private String briefInfo;
+	private String detailInfo;
+	private String reviewerName;
+	private String inputRealName;
+	
+	private String inputOrgName;
+	private Date inputTime;
+	private String inputUserName;
 	public MultipartFile[] getFile() {
 		return file;
 	}
@@ -54,17 +58,41 @@ public class EventVO implements Serializable{
 	public void setEventType(String eventType) {
 		this.eventType = eventType;
 	}
-	public String getHandler() {
-		return handler;
+	public String getCheckedClear() {
+		return checkedClear;
 	}
-	public void setHandler(String handler) {
-		this.handler = handler;
+	public void setCheckedClear(String checkedClear) {
+		this.checkedClear = checkedClear;
 	}
-	public String getBriefInfo() {
-		return briefInfo;
+	public String getRcvOrgCode() {
+		return rcvOrgCode;
 	}
-	public void setBriefInfo(String briefInfo) {
-		this.briefInfo = briefInfo;
+	public void setRcvOrgCode(String rcvOrgCode) {
+		this.rcvOrgCode = rcvOrgCode;
+	}
+	public String getRcvOrgName() {
+		return rcvOrgName;
+	}
+	public void setRcvOrgName(String rcvOrgName) {
+		this.rcvOrgName = rcvOrgName;
+	}
+	public String getHandlerName() {
+		return handlerName;
+	}
+	public void setHandlerName(String handlerName) {
+		this.handlerName = handlerName;
+	}
+	public String getReportorName() {
+		return reportorName;
+	}
+	public void setReportorName(String reportorName) {
+		this.reportorName = reportorName;
+	}
+	public String getReportorTel() {
+		return reportorTel;
+	}
+	public void setReportorTel(String reportorTel) {
+		this.reportorTel = reportorTel;
 	}
 	public String getCoOrgContact() {
 		return coOrgContact;
@@ -84,17 +112,11 @@ public class EventVO implements Serializable{
 	public void setCoOrgTel(String coOrgTel) {
 		this.coOrgTel = coOrgTel;
 	}
-	public String getDetailInfo() {
-		return detailInfo;
+	public String getName() {
+		return name;
 	}
-	public void setDetailInfo(String detailInfo) {
-		this.detailInfo = detailInfo;
-	}
-	public Date getEventTime() {
-		return eventTime;
-	}
-	public void setEventTime(Date eventTime) {
-		this.eventTime = eventTime;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getGender() {
 		return gender;
@@ -108,65 +130,17 @@ public class EventVO implements Serializable{
 	public void setIdNum(String idNum) {
 		this.idNum = idNum;
 	}
-	public int getInputOrgId() {
-		return inputOrgId;
+	public String getBriefInfo() {
+		return briefInfo;
 	}
-	public void setInputOrgId(int inputOrgId) {
-		this.inputOrgId = inputOrgId;
+	public void setBriefInfo(String briefInfo) {
+		this.briefInfo = briefInfo;
 	}
-	public String getInputOrgName() {
-		return inputOrgName;
+	public String getDetailInfo() {
+		return detailInfo;
 	}
-	public void setInputOrgName(String inputOrgName) {
-		this.inputOrgName = inputOrgName;
-	}
-	public String getInputRealName() {
-		return inputRealName;
-	}
-	public void setInputRealName(String inputRealName) {
-		this.inputRealName = inputRealName;
-	}
-	public Date getInputTime() {
-		return inputTime;
-	}
-	public void setInputTime(Date inputTime) {
-		this.inputTime = inputTime;
-	}
-	public int getInputUserId() {
-		return inputUserId;
-	}
-	public void setInputUserId(int inputUserId) {
-		this.inputUserId = inputUserId;
-	}
-	public String getInputUserName() {
-		return inputUserName;
-	}
-	public void setInputUserName(String inputUserName) {
-		this.inputUserName = inputUserName;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getOrgId() {
-		return orgId;
-	}
-	public void setOrgId(int orgId) {
-		this.orgId = orgId;
-	}
-	public String getReportorName() {
-		return reportorName;
-	}
-	public void setReportorName(String reportorName) {
-		this.reportorName = reportorName;
-	}
-	public String getReportorTel() {
-		return reportorTel;
-	}
-	public void setReportorTel(String reportorTel) {
-		this.reportorTel = reportorTel;
+	public void setDetailInfo(String detailInfo) {
+		this.detailInfo = detailInfo;
 	}
 	public String getReviewerName() {
 		return reviewerName;
@@ -174,6 +148,34 @@ public class EventVO implements Serializable{
 	public void setReviewerName(String reviewerName) {
 		this.reviewerName = reviewerName;
 	}
-	
-	
+	public String getInputRealName() {
+		return inputRealName;
+	}
+	public void setInputRealName(String inputRealName) {
+		this.inputRealName = inputRealName;
+	}
+	public String getInputOrgName() {
+		return inputOrgName;
+	}
+	public void setInputOrgName(String inputOrgName) {
+		this.inputOrgName = inputOrgName;
+	}
+	public Date getInputTime() {
+		return inputTime;
+	}
+	public void setInputTime(Date inputTime) {
+		this.inputTime = inputTime;
+	}
+	public String getInputUserName() {
+		return inputUserName;
+	}
+	public void setInputUserName(String inputUserName) {
+		this.inputUserName = inputUserName;
+	}
+	public String getEventTime() {
+		return eventTime;
+	}
+	public void setEventTime(String eventTime) {
+		this.eventTime = eventTime;
+	}
 }

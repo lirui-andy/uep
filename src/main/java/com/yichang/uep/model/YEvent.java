@@ -44,7 +44,8 @@ public class YEvent implements Serializable {
 
 	private String gender;
 
-	private String handler;
+	@Column(name="handler_name")
+	private String handlerName;
 
 	@Column(name="id_num")
 	private String idNum;
@@ -70,8 +71,11 @@ public class YEvent implements Serializable {
 
 	private String name;
 
-	@Column(name="org_id")
-	private int orgId;
+	@Column(name="rcv_org_code")
+	private String rcvOrgCode;
+
+	@Column(name="rcv_org_name")
+	private String rcvOrgName;
 
 	@Column(name="reportor_name")
 	private String reportorName;
@@ -157,12 +161,12 @@ public class YEvent implements Serializable {
 		this.gender = gender;
 	}
 
-	public String getHandler() {
-		return this.handler;
+	public String getHandlerName() {
+		return this.handlerName;
 	}
 
-	public void setHandler(String handler) {
-		this.handler = handler;
+	public void setHandlerName(String handlerName) {
+		this.handlerName = handlerName;
 	}
 
 	public String getIdNum() {
@@ -229,12 +233,20 @@ public class YEvent implements Serializable {
 		this.name = name;
 	}
 
-	public int getOrgId() {
-		return this.orgId;
+	public String getRcvOrgCode() {
+		return this.rcvOrgCode;
 	}
 
-	public void setOrgId(int orgId) {
-		this.orgId = orgId;
+	public void setRcvOrgCode(String rcvOrgCode) {
+		this.rcvOrgCode = rcvOrgCode;
+	}
+
+	public String getRcvOrgName() {
+		return this.rcvOrgName;
+	}
+
+	public void setRcvOrgName(String rcvOrgName) {
+		this.rcvOrgName = rcvOrgName;
 	}
 
 	public String getReportorName() {
