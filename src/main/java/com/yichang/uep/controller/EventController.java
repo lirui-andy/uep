@@ -1,21 +1,20 @@
 package com.yichang.uep.controller;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yichang.uep.dto.datatables.PageAdapter;
+import com.yichang.uep.dto.datatables.RequestAdapter;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.repo.EventRepo;
 import com.yichang.uep.service.EventManage;
@@ -29,11 +28,14 @@ public class EventController {
 	@Autowired
 	EventManage eventManage;
 	
-	@RequestMapping("/")
+	@PostMapping(path="/list", consumes={"text/plain", "application/json"})
 	@ResponseBody
-	public Page<YEvent> list(EventVO event){
-		Page<YEvent> page = eventManage.findNewEvent(event, 1, 0);
-		return page;
+	public PageAdapter<YEvent> list(@RequestBody RequestAdapter<EventVO> eventSearch){
+		int orgId = 1;
+		
+		Page<YEvent> page = eventManage.findNewEvent(eventSearch.getCondition(), 
+				orgId, eventSearch.getPage());
+		return PageAdapter.create(page, eventSearch.getDraw());
 	}
 	
 	@PostMapping("/save")

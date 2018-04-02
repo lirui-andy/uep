@@ -2,6 +2,9 @@ package com.yichang.uep.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class YEvent implements Serializable {
 	@Column(name="detail_info")
 	private String detailInfo;
 
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="event_time")
 	private Date eventTime;

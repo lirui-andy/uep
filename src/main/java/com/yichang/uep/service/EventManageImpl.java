@@ -41,6 +41,7 @@ public class EventManageImpl implements EventManage {
 	//组装查询条件数组
 	private List<Predicate> commenSepc(final EventVO event, Root<YEvent> root, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<>();
+		if(event == null) return predicates;
 		//事件类别 
 		if( !StringUtils.isBlank( event.getEventType()))
 			predicates.add(root.get("eventType").in(event.getEventType()));
@@ -65,7 +66,7 @@ public class EventManageImpl implements EventManage {
 	}
 	
 	//拼装未签收查询Specification
-	private Specification<YEvent> unreadEventSpec(final EventVO event){
+	private Specification<YEvent> unreadEventSpec(final EventVO event, final Integer orgId){
 		Specification<YEvent> spec = new Specification<YEvent>() {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -77,7 +78,7 @@ public class EventManageImpl implements EventManage {
 				subquery.select(subroot);
 				subquery.where(
 						cb.equal(root.get("eventId"), subroot.get("YEvent").get("eventId")),
-						cb.equal(subroot.get("orgId"), 1));
+						cb.equal(subroot.get("orgId"), orgId));
 				
 				predicates.add(cb.not(cb.exists(subquery)));
 				
@@ -102,15 +103,22 @@ public class EventManageImpl implements EventManage {
 		return spec;
 	}
 	
+	private PageRequest pageRequest(Integer pageNum){
+		if(pageNum == null ) pageNum = 0;
+		return PageRequest.of(pageNum, 20, Direction.DESC, "eventTime");
+	}
 	
+	
+	//查询单位未签收事件
 	@Override
-	public Page<YEvent> findNewEvent(final EventVO event, int orgId, int pageNum) {
-		return eventRepo.findAll(unreadEventSpec(event), PageRequest.of(pageNum, 20, Direction.DESC, "eventTime"));
+	public Page<YEvent> findNewEvent(EventVO event, Integer orgId, Integer pageNum) {
+		return eventRepo.findAll( unreadEventSpec(event, orgId), pageRequest(pageNum));
 	}
 
+	//按条件查询事件
 	@Override
-	public Page<YEvent> findEvent(EventVO event,int pageNum) {	
-		return eventRepo.findAll(eventSpec(event), PageRequest.of(pageNum, 20, Direction.DESC, "eventTime"));
+	public Page<YEvent> findEvent(EventVO event,Integer pageNum) {	
+		return eventRepo.findAll( eventSpec(event), pageRequest(pageNum));
 	}
 
 }

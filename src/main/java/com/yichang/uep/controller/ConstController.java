@@ -18,6 +18,13 @@ public class ConstController {
 
 	@Autowired
 	ConstRepo constRepo;
+
+	@RequestMapping("/const")
+    @ResponseBody
+    List<YConst> all() {
+		List<YConst> list = constRepo.findAll();
+        return list;
+    }
 	
 	@RequestMapping("/const/{group}")
     @ResponseBody
@@ -25,5 +32,6 @@ public class ConstController {
 		List<YConst> list = constRepo.findByConstGroup(group);
         return list;
     }
+
 
 }

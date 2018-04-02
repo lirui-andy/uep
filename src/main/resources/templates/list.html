@@ -38,24 +38,30 @@
 									<label for="gender" class="col-md-1 control-label">性别</label>
 									<div class="col-md-1">
 										<select id="gender" name="gender" data-constGroup="GENDER" class="form-control no-padding">
+										<option value="">不限</option>
 										</select>
 									</div>
 
 								</div>
 								<div class="form-group">
 									<label for="eventTime" class="col-md-2 control-label">事件时间</label>
-									<div class="col-md-4">
+									<div class="col-md-4 ">
+										<div class="input-group">
 										<input type="text" name="timeRange" class="form-control" id="timeRange" data-daterangepicker placeholder="">
+										<div class="input-group-addon">
+					                      <a class="fa fa-trash-o" href="javascript:$('#timeRange').val('');"></a>
+					                    </div>
+					                    </div>
 									</div>
 									<div class="col-md-1">
-										<button type="submit" class="btn btn-default">查询</button>
+										<button type="button" onclick="queryEvent();return false;" class="btn btn-default">查询</button>
 									</div>
 								</div>
 							</form>
 
 							<div class="table-responsive no-padding">
-								<table class="table table-hover table-bordered">
-									<tbody>
+								<table class="table table-hover table-bordered" id="eventTable">
+									<thead>
 										<tr>
 											<th>类别</th>
 											<th>姓名</th>
@@ -66,28 +72,13 @@
 											<th>录入民警</th>
 											<th>录入单位</th>
 										</tr>
-										<tr>
-											<td>未知名尸体</td>
-											<td>John Doe</td>
-											<td>男</td>
-											<td>100100199910100101</td>
-											<td>2017-10-01</td>
-											<td>2017-10-01 11:39:00</td>
-											<td>张三</td>
-											<td>葛洲坝派出所</td>
-										</tr>
+									</thead>
+									<tbody>
 									</tbody>
 								</table>
 							</div>
 						</div>
 						<div class="box-footer clearfix">
-							<ul class="pagination  no-margin pull-right">
-								<li><a href="#">«</a></li>
-								<li><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">»</a></li>
-							</ul>
 						</div>
 					</div>
 					<!-- /.box -->

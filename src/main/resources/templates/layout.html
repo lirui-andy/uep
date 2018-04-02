@@ -24,6 +24,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <link rel="stylesheet" th:href="@{/plugins/timepicker/bootstrap-timepicker.min.css}">
   <!-- Select2 -->
   <link rel="stylesheet" th:href="@{/bower_components/select2/dist/css/select2.min.css}">
+  
+  <link rel="stylesheet" th:href="@{/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
+  
   <!-- Theme style -->
   <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -53,6 +56,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <script th:src="@{/plugins/input-mask/jquery.inputmask.js}"></script>
 <script th:src="@{/plugins/input-mask/jquery.inputmask.date.extensions.js}"></script>
+
+<script th:src="@{/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
 
 
 <!-- date-range-picker -->
@@ -88,11 +94,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">首页</a></li>
-            <li><a href="#">未知名尸体</a></li>
-            <li><a href="#">落水失踪人员</a></li>
-            <li><a href="#">疑似落水失踪人员</a></li>
-            <li><a href="#">外单位协查</a></li>
+            <li data-eventType=""><a href="/list?t=0">首页</a></li>
+            <li data-eventType="1"><a href="/list?t=1">未知名尸体</a></li>
+            <li data-eventType="2"><a href="/list?t=2">落水失踪人员</a></li>
+            <li data-eventType="3"><a href="/list?t=3">疑似落水失踪人员</a></li>
+            <li data-eventType="4"><a href="/list?t=4">外单位协查</a></li>
           </ul>
           <!--
           <form class="navbar-form navbar-left" role="search">
