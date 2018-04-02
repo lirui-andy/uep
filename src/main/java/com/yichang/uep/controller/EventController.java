@@ -18,6 +18,7 @@ import com.yichang.uep.dto.datatables.RequestAdapter;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.repo.EventRepo;
 import com.yichang.uep.service.EventManage;
+import com.yichang.uep.utils.StringUtils;
 
 @Controller
 @RequestMapping("event")
@@ -32,9 +33,15 @@ public class EventController {
 	@ResponseBody
 	public PageAdapter<YEvent> list(@RequestBody RequestAdapter<EventVO> eventSearch){
 		int orgId = 1;
-		
-		Page<YEvent> page = eventManage.findNewEvent(eventSearch.getCondition(), 
-				orgId, eventSearch.getPage());
+		Page<YEvent> page  = null;
+		if(eventSearch.getCondition() == null || StringUtils.isBlank(eventSearch.getCondition().getEventType())){
+			page = eventManage.findNewEvent(eventSearch.getCondition(), 
+					orgId, eventSearch.getPage());
+		}
+		else{
+			page = eventManage.findEvent(eventSearch.getCondition(), 
+					eventSearch.getPage());
+		}
 		return PageAdapter.create(page, eventSearch.getDraw());
 	}
 	
