@@ -23,24 +23,21 @@
 						<!-- /.box-header -->
 						<div class="box-body">
 
-							<form class="form-horizontal">
+							<form class="form-horizontal" id="eventQueryForm">
 								<div class="form-group">
 									<label for="inputEmail3" class="col-md-2 control-label">姓名</label>
 									<div class="col-md-2">
-										<input type="text" class="form-control" id="inputEmail2" placeholder="">
+										<input type="text" name="name" class="form-control" id="inputEmail2" placeholder="">
 									</div>
 
 									<label for="idnum" class="col-md-2 control-label">身份证号</label>
 									<div class="col-md-3">
-										<input type="text" class="form-control" id="idnum" placeholder="">
+										<input type="text" name="idNum" class="form-control" id="idnum" placeholder="">
 									</div>
 
 									<label for="gender" class="col-md-1 control-label">性别</label>
 									<div class="col-md-1">
-										<select id="gender" class="form-control no-padding">
-											<option>男</option>
-											<option>女</option>
-											<option>未知</option>
+										<select id="gender" name="gender" data-constGroup="GENDER" class="form-control no-padding">
 										</select>
 									</div>
 
@@ -48,7 +45,7 @@
 								<div class="form-group">
 									<label for="eventTime" class="col-md-2 control-label">事件时间</label>
 									<div class="col-md-4">
-										<input type="text" class="form-control" id="eventTime" data-daterangepicker placeholder="">
+										<input type="text" name="timeRange" class="form-control" id="timeRange" data-daterangepicker placeholder="">
 									</div>
 									<div class="col-md-1">
 										<button type="submit" class="btn btn-default">查询</button>

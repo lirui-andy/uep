@@ -3,6 +3,7 @@ package com.yichang.uep.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -85,6 +86,10 @@ public class YEvent implements Serializable {
 
 	@Column(name="reviewer_name")
 	private String reviewerName;
+
+	//bi-directional many-to-one association to YEventReceipt
+	@OneToMany(mappedBy="YEvent")
+	private List<YEventReceipt> YEventReceipts;
 
 	public YEvent() {
 	}
@@ -271,6 +276,28 @@ public class YEvent implements Serializable {
 
 	public void setReviewerName(String reviewerName) {
 		this.reviewerName = reviewerName;
+	}
+
+	public List<YEventReceipt> getYEventReceipts() {
+		return this.YEventReceipts;
+	}
+
+	public void setYEventReceipts(List<YEventReceipt> YEventReceipts) {
+		this.YEventReceipts = YEventReceipts;
+	}
+
+	public YEventReceipt addYEventReceipt(YEventReceipt YEventReceipt) {
+		getYEventReceipts().add(YEventReceipt);
+		YEventReceipt.setYEvent(this);
+
+		return YEventReceipt;
+	}
+
+	public YEventReceipt removeYEventReceipt(YEventReceipt YEventReceipt) {
+		getYEventReceipts().remove(YEventReceipt);
+		YEventReceipt.setYEvent(null);
+
+		return YEventReceipt;
 	}
 
 }

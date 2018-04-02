@@ -3,6 +3,7 @@ package com.yichang.uep.controller;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 public class EventVO implements Serializable{
@@ -29,7 +30,12 @@ public class EventVO implements Serializable{
 
 	private String name;
 	private String gender;
-	private String eventTime;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date eventTime;
+	
+	private String timeRange;
+	
 	private String idNum;
 	
 	private String briefInfo;
@@ -172,10 +178,16 @@ public class EventVO implements Serializable{
 	public void setInputUserName(String inputUserName) {
 		this.inputUserName = inputUserName;
 	}
-	public String getEventTime() {
+	public Date getEventTime() {
 		return eventTime;
 	}
-	public void setEventTime(String eventTime) {
+	public void setEventTime(Date eventTime) {
 		this.eventTime = eventTime;
+	}
+	public String getTimeRange() {
+		return timeRange;
+	}
+	public void setTimeRange(String timeRange) {
+		this.timeRange = timeRange;
 	}
 }
