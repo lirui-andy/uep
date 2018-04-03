@@ -3,6 +3,7 @@ package com.yichang.uep.controller;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,13 +25,16 @@ import com.yichang.uep.dto.CommonOperResult;
 import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.dto.datatables.PageAdapter;
 import com.yichang.uep.dto.datatables.RequestAdapter;
+import com.yichang.uep.model.YAttachment;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.model.YEventComment;
 import com.yichang.uep.model.YEventReceipt;
+import com.yichang.uep.repo.AttachmentRepo;
 import com.yichang.uep.repo.EventCommentRepo;
 import com.yichang.uep.repo.EventReceiptRepo;
 import com.yichang.uep.repo.EventRepo;
 import com.yichang.uep.service.EventManage;
+import com.yichang.uep.utils.FileUtils;
 import com.yichang.uep.utils.StringUtils;
 
 @Controller
@@ -43,6 +47,8 @@ public class EventController extends BaseController{
 	EventReceiptRepo eventReceiptRepo;
 	@Autowired
 	EventCommentRepo eventCommentRepo;
+	@Autowired
+	AttachmentRepo attachmentRepo;
 	
 	@Autowired
 	EventManage eventManage;
@@ -77,20 +83,37 @@ public class EventController extends BaseController{
 	@PostMapping("/save")
 	@ResponseBody
 	public CommonOperResult<?> save(EventVO event){
-		/*
-		Stream.of(event.getFile())
-		.filter(f -> (f != null && f.getSize() > 0 ) )
-		.forEach(f -> {
-			long size = f.getSize();
-			String name = f.getOriginalFilename();
-			logger.info(name+"  ,size="+size);
-		});
-		*/
-		logger.info("EventType="+event.getEventType());
 		
 		YEvent eventModel = new YEvent();
 		BeanUtils.copyProperties(event, eventModel,"eventId", "inputTime");
-		eventRepo.save(eventModel);
+		
+		eventModel = eventRepo.save(eventModel);
+		final int eventId = eventModel.getEventId();
+		final Date now = new Date();
+		final String user = currentUser().getUserName();
+		//file
+		Stream.of(event.getFile())
+		.filter(f -> (f != null && f.getSize() > 0 ) )
+		.forEach(f -> {
+			try {
+				long size = f.getSize();
+				String name = f.getOriginalFilename();
+				YAttachment att = new YAttachment();
+				att.setEventId(eventId);
+				att.setFileName(f.getOriginalFilename());
+				att.setFileSize(f.getSize());
+				att.setUpTime(now);
+				att.setUpUser(user);
+				att.setAttUri(eventId+"_"+FileUtils.genId());
+				FileUtils.saveFile(f.getInputStream(), att.getAttUri());
+				attachmentRepo.save(att);
+				logger.info(name+"  ,size="+size);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				e.printStackTrace();
+			}
+		});
+		logger.info("EventType="+event.getEventType());
 		
 		return CommonOperResult.success();
 	}
@@ -99,6 +122,7 @@ public class EventController extends BaseController{
 	public String view(@PathVariable("eventId") Integer eventId, Model model){
 		YEventReceipt rcpt = eventReceiptRepo.findTop1ByEventIdAndOrgId(eventId, currentUser().getOrgId());
 		boolean signed = rcpt != null;
+		signed = true;
 		if(!signed)
 			return "sign";
 		else{
@@ -106,8 +130,12 @@ public class EventController extends BaseController{
 			if(event.isPresent()){
 				model.addAttribute("event", event.get());
 				
+				//签收列表
 				List<YEventReceipt> receipts = eventReceiptRepo.findByEventIdOrderByReceiptTimeDesc(eventId);
 				model.addAttribute("receipts", receipts);
+				//附件列表
+				List<YAttachment> attachs = attachmentRepo.findByEventIdOrderByAttIdDesc(eventId);
+				model.addAttribute("attachs", attachs);
 			}
 		}
 		return "view";

@@ -97,7 +97,8 @@
 										</div>
 										<label for="input14" class="col-md-1 control-label">图片</label>
 										<div class="col-md-4 form-control-static">
-											查看
+											<a style="margin-right:1rem;" th:each="att:${attachs}" 
+												th:href="|javascript:viewAttach('${att.attUri}')|" th:text="${att.fileName}"></a>
 										</div>
 									</div>									
 								</div>

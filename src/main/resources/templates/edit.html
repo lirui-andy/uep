@@ -4,6 +4,8 @@
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
+
+<script th:src="@{/dist/js/eventEdit.js}"></script>
 	<div class="wrapper">
 
 		<header th:replace="layout::mainHeader"> </header>
@@ -20,7 +22,7 @@
 							<h3 class="box-title">信息录入</h3>
 						</div>
 						<!-- /.box-header -->
-						<form class="form" th:action="@{/event/save}" method="POST">
+						<form class="form" th:action="@{/event/save}" method="POST" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="form-horizontal">
 									<div class="form-group">
@@ -94,7 +96,8 @@
 										</div>
 										<label for="input14" class="col-md-1 control-label">图片</label>
 										<div class="col-md-4 form-control-static">
-											上传
+											<input type='file' name='file'>
+											<a href="javascript: " onclick="insertAttach(this);" class=" btn btn-flat btn-info btn-xs">添加</a>
 										</div>
 									</div>									
 								</div>
