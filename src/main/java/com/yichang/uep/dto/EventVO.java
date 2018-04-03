@@ -1,4 +1,4 @@
-package com.yichang.uep.controller;
+package com.yichang.uep.dto;
 
 import java.io.Serializable;
 import java.util.Date;

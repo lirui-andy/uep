@@ -1,12 +1,21 @@
 package com.yichang.uep.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 /**
@@ -39,7 +48,6 @@ public class YEvent implements Serializable {
 	@Column(name="detail_info")
 	private String detailInfo;
 
-	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="event_time")
 	private Date eventTime;
@@ -91,9 +99,6 @@ public class YEvent implements Serializable {
 	@Column(name="reviewer_name")
 	private String reviewerName;
 
-	//bi-directional many-to-one association to YEventReceipt
-	@OneToMany(mappedBy="YEvent")
-	private List<YEventReceipt> YEventReceipts;
 
 	public YEvent() {
 	}
@@ -282,26 +287,5 @@ public class YEvent implements Serializable {
 		this.reviewerName = reviewerName;
 	}
 
-	public List<YEventReceipt> getYEventReceipts() {
-		return this.YEventReceipts;
-	}
-
-	public void setYEventReceipts(List<YEventReceipt> YEventReceipts) {
-		this.YEventReceipts = YEventReceipts;
-	}
-
-	public YEventReceipt addYEventReceipt(YEventReceipt YEventReceipt) {
-		getYEventReceipts().add(YEventReceipt);
-		YEventReceipt.setYEvent(this);
-
-		return YEventReceipt;
-	}
-
-	public YEventReceipt removeYEventReceipt(YEventReceipt YEventReceipt) {
-		getYEventReceipts().remove(YEventReceipt);
-		YEventReceipt.setYEvent(null);
-
-		return YEventReceipt;
-	}
 
 }

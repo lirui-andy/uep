@@ -2,7 +2,7 @@ package com.yichang.uep.service;
 
 import org.springframework.data.domain.Page;
 
-import com.yichang.uep.controller.EventVO;
+import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.model.YEvent;
 
 public interface EventManage {

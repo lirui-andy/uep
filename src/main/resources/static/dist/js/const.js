@@ -40,10 +40,18 @@ function create_const_select(constGroup, selector){
 		
 }
 
-/* 自动转换页面上标记为data-constGroup的下拉菜单 */
 $(function(){
 	Const.cacheAllConst();
+
+	/* 自动转换页面上标记为data-constGroup的下拉菜单 */
 	$("select[data-constGroup]").each(function(i, e){
 		create_const_select($(e).attr("data-constGroup"), e);
+	});
+
+	/* 自动转换页面上标记为data-const的标签 */
+	$("[data-const]").each(function(i,e){
+		e = $(e);
+		var translated = Const.translateByGroupAndCode(e.attr("data-constgroup"), e.attr("data-constval"));
+		e.text(translated);
 	});
 });

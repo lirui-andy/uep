@@ -1,35 +1,9 @@
-var currentMenu = "";
-var tableDefaultOptions = {
-	      'paging'      : true,
-	      'processing'  : true,
-	      'serverSide'  : true,
-	      "pageLength"  :  20,
-	      'lengthChange': false,
-	      'searching'   : false,
-	      'ordering'    : false,
-	      'info'        : true,
-	      'autoWidth'   : false,
-		  'language': {
-	            'lengthMenu': '每页显示 _MENU_ 行',
-	            'zeroRecords': '未查询到数据',
-	            'info': '第 _PAGE_ 页/共 _PAGES_ 页',
-	            'infoEmpty': '未查询到数据',
-	            'infoFiltered': '(从 _MAX_ 条记录中筛选)',
-	            'loadingRecords':'加载中...',
-	            'paginate':{
-	            	'first':'第一页',
-	            	'last':'最后一页',
-	            	'next':'下一页',
-	            	'previous':'上一页'
-	            }
-	        }
-	    };
 
-function queryEvent(){
+function listReceipt(){
 	//$("#eventQueryForm").serialize()
 	var tableOptions = {
 			'ajax':{
-				'url':'/event/list',
+				'url':'/event/receipt/1',
 				'method': 'POST',
 				'contentType': 'application/json;charset=UTF-8',
 				'dataSrc': function(json){

@@ -2,6 +2,10 @@ package com.yichang.uep.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 
@@ -20,6 +24,9 @@ public class YEventReceipt implements Serializable {
 	@Column(name="receipt_id")
 	private int receiptId;
 
+	@Column(name="event_id")
+	private int eventId;
+	
 	@Column(name="org_id")
 	private int orgId;
 
@@ -36,10 +43,6 @@ public class YEventReceipt implements Serializable {
 	@Column(name="user_id")
 	private int userId;
 
-	//bi-directional many-to-one association to YEvent
-	@ManyToOne
-	@JoinColumn(name="event_id")
-	private YEvent YEvent;
 
 	public YEventReceipt() {
 	}
@@ -92,12 +95,12 @@ public class YEventReceipt implements Serializable {
 		this.userId = userId;
 	}
 
-	public YEvent getYEvent() {
-		return this.YEvent;
+	public int getEventId() {
+		return eventId;
 	}
 
-	public void setYEvent(YEvent YEvent) {
-		this.YEvent = YEvent;
+	public void setEventId(int eventId) {
+		this.eventId = eventId;
 	}
 
 }

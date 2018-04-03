@@ -17,7 +17,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
-import com.yichang.uep.controller.EventVO;
+import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.model.YEventReceipt;
 import com.yichang.uep.repo.EventRepo;
@@ -77,7 +77,7 @@ public class EventManageImpl implements EventManage {
 				Root<YEventReceipt> subroot = subquery.from(YEventReceipt.class);
 				subquery.select(subroot);
 				subquery.where(
-						cb.equal(root.get("eventId"), subroot.get("YEvent").get("eventId")),
+						cb.equal(root.get("eventId"), subroot.get("eventId")),
 						cb.equal(subroot.get("orgId"), orgId));
 				
 				predicates.add(cb.not(cb.exists(subquery)));
