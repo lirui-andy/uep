@@ -37,8 +37,8 @@ function create_const_select(constGroup, selector){
 			if(d.activeFlag == 1)
 				sel.append($("<option value='"+d.constCode+"'>"+d.constName+"</option>"));
 		});
-		
 }
+
 
 $(function(){
 	Const.cacheAllConst();
@@ -49,9 +49,10 @@ $(function(){
 	});
 
 	/* 自动转换页面上标记为data-const的标签 */
-	$("[data-const]").each(function(i,e){
+	$("label[data-const],span[data-const],p[data-const]").each(function(i,e){
 		e = $(e);
 		var translated = Const.translateByGroupAndCode(e.attr("data-constgroup"), e.attr("data-constval"));
 		e.text(translated);
 	});
+	
 });

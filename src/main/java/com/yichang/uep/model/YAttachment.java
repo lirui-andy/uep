@@ -47,6 +47,9 @@ public class YAttachment implements Serializable {
 
 	@Column(name="up_user")
 	private String upUser;
+	
+	@Column(name="file_type")
+	private String fileType;
 
 	public YAttachment() {
 	}
@@ -105,6 +108,14 @@ public class YAttachment implements Serializable {
 
 	public void setUpUser(String upUser) {
 		this.upUser = upUser;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.yichang.uep.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,6 +21,8 @@ import org.springframework.stereotype.Component;
 import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.model.YEventReceipt;
+import com.yichang.uep.model.YUser;
+import com.yichang.uep.repo.EventReceiptRepo;
 import com.yichang.uep.repo.EventRepo;
 import com.yichang.uep.utils.DateUtils;
 import com.yichang.uep.utils.StringUtils;
@@ -29,6 +32,8 @@ public class EventManageImpl implements EventManage {
 
 	@Autowired
 	EventRepo eventRepo;
+	@Autowired
+	EventReceiptRepo eventReceiptRepo;
 	
 	@Override
 	@Transactional
@@ -119,6 +124,20 @@ public class EventManageImpl implements EventManage {
 	@Override
 	public Page<YEvent> findEvent(EventVO event,Integer pageNum) {	
 		return eventRepo.findAll( eventSpec(event), pageRequest(pageNum));
+	}
+
+	//签收事件
+	@Override
+	public void receiveEvent(YUser rcvUser, int eventId, String rcvUserRealName) {
+		YEventReceipt recpt = new YEventReceipt();
+		recpt.setEventId(eventId);
+		recpt.setReceiptTime(new Date());
+		recpt.setReceiptUser(rcvUser.getUserName());
+		recpt.setUserId(rcvUser.getUserId());
+		recpt.setOrgId(rcvUser.getOrgId());
+		recpt.setReceiptOrgName(rcvUser.getOrgName());
+		eventReceiptRepo.save(recpt);
+		
 	}
 
 }

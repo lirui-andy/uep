@@ -34,7 +34,12 @@ var datepickerConfig = {
 $(function(){
 	$(":radio,:checkbox").iCheck({
 	      checkboxClass: 'icheckbox_square-blue',
-	      radioClass   : 'iradio_flat-blue'
+	      radioClass   : 'iradio_flat-blue',
+	}).on('ifChanged', function(event){
+		$(event.target).trigger("change");
+//		var srcEvent = $(event.target).attr("onchange");
+//		if (srcEvent)
+//			eval(srcEvent);
 	});
 	$('[data-datepicker]').daterangepicker($.extend({},datepickerConfig,{"singleDatePicker": true}));
 	$('[data-daterangepicker]').daterangepicker(datepickerConfig);

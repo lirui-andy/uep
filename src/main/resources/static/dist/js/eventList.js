@@ -39,7 +39,7 @@ function queryEvent(){
 						e.genderStr = Const.translateByGroupAndCode('GENDER', e.gender);
 						e.eventTypeStr = Const.translateByGroupAndCode('EVENT_TYPE', e.eventType);
 						
-						e.name = '<a href=#>'+e.name+'</a>';
+						e.name = '<a href="/event/'+e.eventId+'" target=_blank>'+e.name+'</a>';
 					});
 					return json.data;
 				}, 

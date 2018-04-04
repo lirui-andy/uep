@@ -1,9 +1,17 @@
 package com.yichang.uep.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +38,7 @@ import com.yichang.uep.model.YAttachment;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.model.YEventComment;
 import com.yichang.uep.model.YEventReceipt;
+import com.yichang.uep.model.YUser;
 import com.yichang.uep.repo.AttachmentRepo;
 import com.yichang.uep.repo.EventCommentRepo;
 import com.yichang.uep.repo.EventReceiptRepo;
@@ -82,15 +92,22 @@ public class EventController extends BaseController{
 	 */
 	@PostMapping("/save")
 	@ResponseBody
-	public CommonOperResult<?> save(EventVO event){
+	public CommonOperResult<?> save(EventVO event, final HttpServletRequest request){
+		final Date now = new Date();
+		final YUser currentUser = currentUser();
+		
 		
 		YEvent eventModel = new YEvent();
 		BeanUtils.copyProperties(event, eventModel,"eventId", "inputTime");
+		eventModel.setInputTime(now);
+		eventModel.setInputOrgId(currentUser.getOrgId());
+		eventModel.setInputOrgName(currentUser.getOrgName());
+		eventModel.setInputUserId(currentUser.getUserId());
+		eventModel.setInputUserName(currentUser.getUserName());
 		
 		eventModel = eventRepo.save(eventModel);
+		
 		final int eventId = eventModel.getEventId();
-		final Date now = new Date();
-		final String user = currentUser().getUserName();
 		//file
 		Stream.of(event.getFile())
 		.filter(f -> (f != null && f.getSize() > 0 ) )
@@ -103,8 +120,9 @@ public class EventController extends BaseController{
 				att.setFileName(f.getOriginalFilename());
 				att.setFileSize(f.getSize());
 				att.setUpTime(now);
-				att.setUpUser(user);
+				att.setUpUser(currentUser.getUserName());
 				att.setAttUri(eventId+"_"+FileUtils.genId());
+				att.setFileType(FileUtils.guessFileType(f.getOriginalFilename()));
 				FileUtils.saveFile(f.getInputStream(), att.getAttUri());
 				attachmentRepo.save(att);
 				logger.info(name+"  ,size="+size);
@@ -113,9 +131,34 @@ public class EventController extends BaseController{
 				e.printStackTrace();
 			}
 		});
-		logger.info("EventType="+event.getEventType());
 		
-		return CommonOperResult.success();
+		try{
+			//录入单位自动签收
+			eventManage.receiveEvent(currentUser, eventId, currentUser.getRealName());
+		}catch(Exception e){
+			logger.error("录入单位自动签收出错");
+			logger.error(e.getMessage(), e);
+		}
+		
+		//备注属性
+		String[] commentCodes = request.getParameterValues("commentKey");
+		if(commentCodes != null){
+			Stream.of(commentCodes).forEach(code -> {
+				String val = request.getParameter("commentVal_"+code);
+				if(val != null){
+					YEventComment cmt = new YEventComment();
+					cmt.setCommentType(code);
+					cmt.setCommentValue(val);
+					cmt.setEventId(eventId);
+					cmt.setOperTime(now);
+					cmt.setOperUser(currentUser.getUserName());
+					eventCommentRepo.save(cmt);
+				}
+			});
+		}
+		
+		
+		return CommonOperResult.success(eventModel);
 	}
 	
 	@GetMapping("/{eventId}")
@@ -136,9 +179,34 @@ public class EventController extends BaseController{
 				//附件列表
 				List<YAttachment> attachs = attachmentRepo.findByEventIdOrderByAttIdDesc(eventId);
 				model.addAttribute("attachs", attachs);
+				//备注信息
+				List<YEventComment> commentlist = eventCommentRepo.findLatestByEventId(eventId);
+				final Map<String, String> comments = new HashMap<>();
+				Stream.of(commentlist.toArray(new YEventComment[]{})).forEach( cmt -> {
+					comments.put(cmt.getCommentType(), cmt.getCommentValue());
+				});
+				model.addAttribute("comments", comments);
 			}
 		}
 		return "view";
+	}
+	
+	@GetMapping(path="/attach/{uuid}")
+	public void viewAttach(@PathVariable("uuid") String uuid, HttpServletResponse response) throws IOException{
+		Optional<YAttachment>  att = attachmentRepo.findTop1ByAttUri(uuid);
+		if(att.isPresent()){
+			String fileType = att.get().getFileType();
+			try(InputStream in = FileUtils.readFile(uuid)){
+				response.setContentType("image/"+fileType);
+				StreamUtils.copy(in, response.getOutputStream());
+				response.flushBuffer();
+			} catch(FileNotFoundException e){
+				response.sendError(404, "图片内容未找到");
+			}
+			
+		}else{
+			response.sendError(404, "图片记录未找到");
+		}
 	}
 	
 	/**
@@ -165,14 +233,7 @@ public class EventController extends BaseController{
 		if(eventId == null ){
 			return CommonOperResult.fail("-1", "eventId invalid");
 		}
-		YEventReceipt recpt = new YEventReceipt();
-		recpt.setEventId(eventId);
-		recpt.setReceiptTime(new Date());
-		recpt.setReceiptUser(user);
-		recpt.setUserId(currentUser().getUserId());
-		recpt.setOrgId(currentUser().getOrgId());
-		recpt.setReceiptOrgName(currentUser().getOrgName());
-		eventReceiptRepo.save(recpt);
+		eventManage.receiveEvent(currentUser(), eventId, user);
 		return CommonOperResult.success();
 	}
 	
