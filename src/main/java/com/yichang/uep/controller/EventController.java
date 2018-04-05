@@ -182,10 +182,10 @@ public class EventController extends BaseController{
 	public String view(@PathVariable("eventId") Integer eventId, Model model){
 		YEventReceipt rcpt = eventReceiptRepo.findTop1ByEventIdAndOrgId(eventId, currentUser().getOrgId());
 		boolean signed = rcpt != null;
-		signed = true;
-		if(!signed)
-			return "sign";
-		else{
+		if(!signed){
+			model.addAttribute("eventId", eventId);
+			model.addAttribute("needSign", true);
+		}else{
 			Optional<YEvent> event = eventRepo.findById(eventId);
 			if(event.isPresent()){
 				model.addAttribute("event", event.get());
@@ -243,15 +243,14 @@ public class EventController extends BaseController{
 	 * @param eventId
 	 * @param user
 	 */
-	@PostMapping("/receipt/{eventId}")
-	@ResponseBody
-	public CommonOperResult<?> doReceipt(@PathVariable Integer eventId, 
+	@PostMapping("/receive")
+	public String doReceipt(@RequestParam("eventId") Integer eventId, 
 			@RequestParam("user") String user){
 		if(eventId == null ){
-			return CommonOperResult.fail("-1", "eventId invalid");
+			return "redirect:/404.html";
 		}
 		eventManage.receiveEvent(currentUser(), eventId, user);
-		return CommonOperResult.success();
+		return "redirect:/event/"+eventId;
 	}
 	
 	/**

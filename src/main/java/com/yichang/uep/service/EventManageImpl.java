@@ -132,7 +132,7 @@ public class EventManageImpl implements EventManage {
 		YEventReceipt recpt = new YEventReceipt();
 		recpt.setEventId(eventId);
 		recpt.setReceiptTime(new Date());
-		recpt.setReceiptUser(rcvUser.getUserName());
+		recpt.setReceiptUser(rcvUserRealName);
 		recpt.setUserId(rcvUser.getUserId());
 		recpt.setOrgId(rcvUser.getOrgId());
 		recpt.setReceiptOrgName(rcvUser.getOrgName());
