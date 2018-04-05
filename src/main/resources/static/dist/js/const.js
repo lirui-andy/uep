@@ -32,10 +32,12 @@ var Const = {
 
 function create_const_select(constGroup, selector){
 	var sel = $(selector);
+	var defVal = sel.attr("data-constVal");
 	var data = Const.getListByGroup(constGroup);
 		$.each(data, function(i, d){
-			if(d.activeFlag == 1)
-				sel.append($("<option value='"+d.constCode+"'>"+d.constName+"</option>"));
+			if(d.activeFlag == 1){
+				sel.append($("<option value='"+d.constCode+"' "+(defVal == d.constCode? "selected":"")+">"+d.constName+"</option>"));
+			}
 		});
 }
 

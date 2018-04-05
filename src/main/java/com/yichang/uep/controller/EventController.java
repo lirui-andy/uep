@@ -141,6 +141,26 @@ public class EventController extends BaseController{
 		}
 		
 		//备注属性
+		saveComments(eventId, currentUser, request);
+		
+		return CommonOperResult.success(eventModel);
+	}
+	
+
+	@PostMapping("/update")
+	@ResponseBody
+	public CommonOperResult<?> update(EventVO event, final HttpServletRequest request){
+		final YUser currentUser = currentUser();
+		//备注属性
+		saveComments(event.getEventId(), currentUser, request);
+		
+		return CommonOperResult.success();
+	}
+
+	//保存备注
+	private void saveComments(final int eventId,  final YUser currentUser,
+			final HttpServletRequest request) {
+		final Date now = new Date();
 		String[] commentCodes = request.getParameterValues("commentKey");
 		if(commentCodes != null){
 			Stream.of(commentCodes).forEach(code -> {
@@ -156,9 +176,6 @@ public class EventController extends BaseController{
 				}
 			});
 		}
-		
-		
-		return CommonOperResult.success(eventModel);
 	}
 	
 	@GetMapping("/{eventId}")
