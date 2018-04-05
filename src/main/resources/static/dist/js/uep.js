@@ -31,7 +31,17 @@ var datepickerConfig = {
     "showDropdowns": true,
 };
 
+
 $(function(){
+	$.ajaxSetup({
+		'beforeSend':function(jqxhr){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			if(token && header){
+				jqxhr.setRequestHeader(header, token);
+			}
+		}
+	});
 	$(":radio,:checkbox").iCheck({
 	      checkboxClass: 'icheckbox_square-blue',
 	      radioClass   : 'iradio_flat-blue',

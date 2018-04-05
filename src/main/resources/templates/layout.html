@@ -4,6 +4,9 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:fragement="head">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="_csrf" th:content="${_csrf.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	  
   <title>未知名尸体处置及落水失踪人员</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">

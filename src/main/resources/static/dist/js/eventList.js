@@ -49,6 +49,7 @@ function queryEvent(){
 					console.log(data);
 					return JSON.stringify(data);
 				}
+
 			},
 			'columns':[
 				{'data':'eventTypeStr'},

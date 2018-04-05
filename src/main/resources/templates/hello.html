@@ -8,9 +8,14 @@
     <body>
         <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
         
+Logged user: <span sec:authentication="name">Bob</span>
+Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+        <span sec:authentication="principal">[ROLE_USER, ROLE_ADMIN]</span>
+<div sec:authorize="hasAuthority('ROLE_USER')">
+  This content is only shown to users.
+</div>
+        
         <form th:action="@{/event/save}" method="post" enctype="multipart/form-data">
-        	<input type="file" name="file"/><br/>
-        	<input type="file" name="file"/><br/>
         	<input type="file" name="file"/><br/>
         	事件类型：<select name="eventType"></select><br/>
         	处警民警：<input type="text" name="handler"/><br/>

@@ -155,21 +155,27 @@
 										</div>
 										<div class="form-group">
 											<label for="" class="control-label">110备注:</label>
-											<div class="form-control-static row">
-								                <label class="col-md-3 col-md-offset-2">
+											<div class="form-control-static row" id="110_comment">
+								                <label class="col-md-3 col-md-offset-2" >
 								                	<input type="hidden" id="commentKey_EVENT_NOTIFY_CITY" name="commentKey" value="EVENT_NOTIFY_CITY">
 								                	<input type="hidden" id="commentVal_EVENT_NOTIFY_CITY" name="commentVal_EVENT_NOTIFY_CITY" th:value="*{comments?.get('EVENT_NOTIFY_CITY')}?:'0'">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_NOTIFY_CITY').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_CITY') == '1'}" class="flat-blue">
+								                	<input type="checkbox" disabled onchange="javascript:$('#commentVal_EVENT_NOTIFY_CITY').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_CITY') == '1'}" class="flat-blue">
 								                  	是否通知市局
 								                </label>
 								                <label class="col-md-3">
 								                	<input type="hidden" id="commentKey_EVENT_NOTIFY_OTHER" name="commentKey" value="EVENT_NOTIFY_OTHER">
 								                	<input type="hidden" id="commentVal_EVENT_NOTIFY_OTHER" name="commentVal_EVENT_NOTIFY_OTHER" th:value="*{comments?.get('EVENT_NOTIFY_OTHER')}?:'0'">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_NOTIFY_OTHER').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_OTHER') == '1'}"  class="flat-blue">
+								                	<input type="checkbox" disabled onchange="javascript:$('#commentVal_EVENT_NOTIFY_OTHER').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_OTHER') == '1'}"  class="flat-blue">
 								                  	是否通知其他分局
 								                </label>
 											</div>
 										</div>	
+										<script type="javascript" sec:authorize="hasAuthority('ROLE_110')">
+										$(function(){
+											$("#110_comment :checkbox").removeAttr("disabled");
+											$("#110_comment :checkbox").iCheck('enable');
+										});
+										</script>
 										<div class="form-group">
 											<label for="" class="control-label">刑侦队备注:</label>
 											<div class="form-control-static row">
