@@ -91,8 +91,7 @@ public class EventController extends BaseController{
 	 * @return
 	 */
 	@PostMapping("/save")
-	@ResponseBody
-	public CommonOperResult<?> save(EventVO event, final HttpServletRequest request){
+	public String save(EventVO event, final HttpServletRequest request){
 		final Date now = new Date();
 		final YUser currentUser = currentUser();
 		
@@ -143,7 +142,7 @@ public class EventController extends BaseController{
 		//备注属性
 		saveComments(eventId, currentUser, request);
 		
-		return CommonOperResult.success(eventModel);
+		return "redirect:/event/"+eventId;
 	}
 	
 
