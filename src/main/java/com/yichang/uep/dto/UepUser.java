@@ -18,6 +18,17 @@ public class UepUser extends YUser implements UserDetails {
 	Collection<? extends GrantedAuthority> authorities;
 	
 	
+	
+	@Override
+	public String getPwd() {
+		return password;
+	}
+
+	@Override
+	public String getUserName() {
+		return username;
+	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
