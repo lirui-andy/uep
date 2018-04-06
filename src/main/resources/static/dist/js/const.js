@@ -18,7 +18,7 @@ var Const = {
 			return target;
 		}
 		
-		,translateByGroupAndCode(group, code){
+		,translateByGroupAndCode: function(group, code){
 			var consts = JSON.parse(sessionStorage.getItem("consts"));
 			var target = {constName:'', constCode:''};
 			consts.forEach(function(d){
