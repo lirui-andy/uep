@@ -1,3 +1,6 @@
+function logout(){
+	
+}
 
 $.fn.serializeObject = function()
 {

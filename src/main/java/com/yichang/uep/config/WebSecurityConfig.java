@@ -1,7 +1,5 @@
 package com.yichang.uep.config;
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,12 +13,16 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.yichang.uep.service.UepUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	@Autowired
+	UepUserDetailsService userService;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -41,17 +43,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userService);
+	}
+
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
-	@Bean
-	protected UserDetailsService userDetailsService() {
-		JdbcDaoImpl j = new JdbcDaoImpl();
-		j.setJdbcTemplate(jdbcTemplate);
-		return j;
-	}
+//	@Bean
+//	protected UserDetailsService userDetailsService() {
+//		JdbcDaoImpl j = new JdbcDaoImpl();
+//		j.setJdbcTemplate(jdbcTemplate);
+//		return j;
+//	}
 
 	
 }

@@ -203,6 +203,9 @@ public class EventController extends BaseController{
 					comments.put(cmt.getCommentType(), cmt.getCommentValue());
 				});
 				model.addAttribute("comments", comments);
+				
+				//当前是否可编辑（登陆人与录入人是同一个单位）
+				model.addAttribute("editable", currentUser().getOrgId() == event.get().getInputOrgId());
 			}
 		}
 		return "view";

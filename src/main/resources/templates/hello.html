@@ -6,7 +6,15 @@
         <script type="text/javascript" th:src="@{/jquery.js}"></script>
     </head>
     <body>
-        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+        <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!
+        [[${#authorization.expression('hasRole("ROLE_USER")')}]]
+        </h1>
+        <div th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}">
+        	HAS USER ROLE
+        </div>
+        <div th:unless="${#authorization.expression('hasRole(''ROLE_110'')')}">
+        	NOT HAS 110 ROLE
+        </div>
         
 Logged user: <span sec:authentication="name">Bob</span>
 Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>

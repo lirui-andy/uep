@@ -24,8 +24,8 @@ public class YUserPerm implements Serializable {
 
 	private String permcode;
 
-	@Column(name="user_id")
-	private int userId;
+	@Column(name="user_name")
+	private String userName;
 
 	public YUserPerm() {
 	}
@@ -54,12 +54,13 @@ public class YUserPerm implements Serializable {
 		this.permcode = permcode;
 	}
 
-	public int getUserId() {
-		return this.userId;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
 
 }
