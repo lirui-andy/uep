@@ -3,8 +3,9 @@
 }
 
 .navbar-brand {
-	margin-top: 0.3em; line-height : 1em;
-	font-size: 2em;
+/* 	margin-top: 0.3em;  */
+	line-height : 2rem;
+	font-size: 2rem;
 	text-shadow: 0 0 0.2em #fff, -0 -0 0.2em #fff;
 	line-height: 1em;
 }
@@ -12,9 +13,34 @@
 .main-header .container {
 	background-image: url(../img/jinghui.png);
 	background-repeat: no-repeat;
-	background-size: 100px;
+	background-size: 80px;
+	background-position: 10px 10px;
+	min-height:100px;
 }
 
 .form-control[readonly]{
 	background:transparent;
+}
+.content-header .nav a{
+	padding: 0 0px;
+	margin-right: 10px;
+}
+.content-header .nav .active a, .content-header .nav a:hover{
+/* 	background: #337ab7; */
+	background: none;
+/* 	color:white; */
+	text-decoration: none;
+	border-bottom: dotted 1px #337ab7;
+	text-shadow: 0 0 5px #337ab7;
+	transition-duration: 0.2s;
+}
+
+@media (min-width: 768px){
+	#navbar-collapse{display:none !important;}
+	.navbar-brand {
+		font-size:30px;
+	}
+}
+@media(max-width:767px){
+	#navbar-widescreen{display:none;}
 }
