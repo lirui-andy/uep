@@ -38,6 +38,16 @@ body{
 	text-shadow: 0 0 5px #337ab7;
 	transition-duration: 0.2s;
 }
+.theme1, .theme1 .main-header .navbar {
+	background: url(../img/bg1.jpg) no-repeat 0 -300px;
+	background-size: 100%;
+}
+
+.theme2 , .theme2 .main-header .navbar {
+	background: url(../img/bg2.jpg) no-repeat 0 -300px;
+	background-size: 100%;
+}
+
 
 @media (min-width: 768px){
 	#navbar-collapse{display:none !important;}

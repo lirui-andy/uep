@@ -1,3 +1,7 @@
+body{
+	font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,宋体,sans-serif;
+}
+
 .login-page {
 	background: #367fa9;
 	background-repeat: no-repeat;
@@ -5,11 +9,11 @@
 	background-size: cover;
 }
 
-.login1 {
+.theme1 {
 	background-image: url(../img/bg1.jpg);
 }
 
-.login2 {
+.theme2 {
 	background-image: url(../img/bg2.jpg);
 }
 
