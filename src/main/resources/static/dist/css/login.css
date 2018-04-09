@@ -1,16 +1,38 @@
 .login-page{
 	background:#367fa9;
-}
-.login-box-title{
-	background-image: url(../img/jinghui.png);
 	background-repeat: no-repeat;
-	background-size: 3em;
-	padding-left:3em;
-	line-height:1.5em;
-	font-size:1.5em;
-	text-shadow: 0 0 0.2em #fff, -0 -0 0.2em #fff;
+	background-position: 0 0;
+	background-size: cover;
+}
+.login1{
+	background-image:url(../img/bg1.jpg);
+}
+.login2{
+	background-image:url(../img/bg2.jpg);
+}
+
+.login-box{
+	background: rgba(250,250,250,0.3);
+	box-shadow: 0 0 0.5em #eee, 0 0 0.5em #eee;
+	width:800px;
+	
+}
+.login-logo{
+	padding-top:25px;
 }
 .login-box-body{
-	background: rgba(250,250,250,0.3);
-	box-shadow: 0 0 0.5em #ccc, 0 0 0.5em #ccc;
+	background:transparent;
+	
+	padding-left:200px;
+	background-image: url(../img/jinghui.png);
+	background-position:20px 10px;
+	background-repeat: no-repeat;
+	background-size: 150px;
+}
+
+
+.login-box-title{
+	line-height:1.5em;
+	font-size:30px;
+	text-shadow: 0 0 0.2em #fff, -0 -0 0.2em #fff;
 }

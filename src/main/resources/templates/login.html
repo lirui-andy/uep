@@ -5,6 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>宜昌分局长江未知名尸体处置及落水失踪人员信息共享平台</title>
+<link rel="shortcut icon" th:href="@{/dist/img/ico.png}" />
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.7 -->
@@ -30,19 +31,31 @@
 <!-- Google Font -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page login1">
 	<div class="login-box">
-		<!-- /.login-logo -->
+		<div class="login-logo">
+					<p class="login-box-title">宜昌分局长江未知名尸体处置及落水失踪人员信息共享平台</p>
+		</div>
 		<div class="login-box-body">
-			<p class="login-box-title">宜昌分局长江未知名尸体处置及落水失踪人员信息共享平台</p>
-			<form th:action="@{/login}" method="post">
-				<div class="form-group has-feedback">
-					<input type="text" name="username" class="form-control" placeholder="用户名">
-					<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+			<form th:action="@{/login}" method="post" class="form-horizontal">
+				<div class="form-group ">
+					<label class="control-label col-md-2">用户名</label>
+					<div class="has-feedback col-md-8">
+						<input type="text" name="username" class="form-control" placeholder="用户名">
+						<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+					</div>
 				</div>
-				<div class="form-group has-feedback">
+				<div class="form-group ">
+					<label class="control-label col-md-2">密码</label>
+					<div class="has-feedback col-md-8">
 					<input type="password" name="password" class="form-control" placeholder="密码">
 					<span class="glyphicon glyphicon-lock form-control-feedback"></span>
+					</div>
+				</div>
+				<div class="form-group ">
+					<div class="col-md-8 col-md-offset-2">
+						<button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
+					</div>
 				</div>
 				<p class="login-box-msg"></p>
 				<div class="row">
@@ -53,10 +66,10 @@
 							</label>
 						</div> -->
 					</div>
-					<!-- /.col -->
-					<div class="col-xs-4">
+					<!-- /.col --><!--
+					<div class="col-xs-10">
 						<button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
-					</div>
+					</div>-->
 					<!-- /.col -->
 				</div>
 			</form>
