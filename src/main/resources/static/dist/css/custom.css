@@ -2,6 +2,17 @@ body{
 	font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,宋体,sans-serif;
 }
 
+.image-list li {
+    list-style: none;
+    float: left;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.image-list img{
+	width: 20px;
+	height: 20px;
+}
+
 .navbar-brand {
 	padding-left: 120px;
 }
@@ -39,13 +50,15 @@ body{
 	transition-duration: 0.2s;
 }
 .theme1, .theme1 .main-header .navbar {
-	background: url(../img/bg1.jpg) no-repeat 0 -300px;
-	background-size: 100%;
+	background: url(../img/bg1.jpg) no-repeat 0 -100px;
+	background-attachment:fixed;
+	background-size: 100% ;
 }
 
 .theme2 , .theme2 .main-header .navbar {
-	background: url(../img/bg2.jpg) no-repeat 0 -300px;
-	background-size: 100%;
+	background: url(../img/bg2.jpg) no-repeat 0 -100px;
+	background-attachment:fixed;
+	background-size: 100% ;
 }
 
 

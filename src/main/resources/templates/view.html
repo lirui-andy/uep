@@ -5,9 +5,11 @@
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav theme2">
 <script type="text/javascript" th:src=@{/dist/js/eventView.js}></script>
-<script type="text/javascript">
 
-</script>
+<script th:src="@{/bower_components/viewerjs/dist/viewer.js}"></script><!-- Viewer.js is required -->
+<link  th:href="@{/bower_components/viewerjs/dist/viewer.css}" rel="stylesheet">
+<script th:src="@{/bower_components/jquery-viewer/dist/jquery-viewer.js}"></script>
+
         <div class="modal fade" id="sign-window" th:if="${needSign?:false}==true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -72,7 +74,8 @@
 												data-constGroup="EVENT_CHECKED_CLEAR" >
 											</span>
 										</div>
-										<div class="col-md-4" th:if="${editable}">
+										<div class="col-md-4" th:if="${editable}" >
+											
 											<input type="hidden" name="commentKey" value="EVENT_CHECKED_CLEAR">
 											<select id="input2" th:data-constVal="${comments?.get('EVENT_CHECKED_CLEAR')}" name="commentVal_EVENT_CHECKED_CLEAR" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
 											</select>
@@ -136,8 +139,13 @@
 										</div>
 										<label for="input14" class="col-md-1 control-label">图片</label>
 										<div class="col-md-4 form-control-static">
+										<!--[if lt IE 7]> 
 											<a style="margin-right:1rem;" th:each="att:${attachs}" 
 												th:href="@{/event/attach/{u}(u=${att.attUri})}" target="_blank" th:text="${att.fileName}"></a>
+												<![endif]-->
+										  <ul id="images" class="image-list">
+										    <li th:each="att:${attachs}"><img th:src="@{/event/attach/{u}(u=${att.attUri})}" th:alt="${att.fileName}"></li>
+										  </ul>
 										</div>
 									</div>									
 								</div>
@@ -240,7 +248,7 @@
 
 							</div>
 							<div class="box-footer clearfix">
-								<div class="row">
+								<div class="row" th:if="${true == showSaveBtn}">
 									<input type="submit" value="保存" class="btn btn-primary col-md-1 col-md-offset-5"/>
 								</div>
 							</div>

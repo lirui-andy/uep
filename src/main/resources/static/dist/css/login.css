@@ -6,7 +6,8 @@ body{
 	background: #367fa9;
 	background-repeat: no-repeat;
 	background-position: 0 0;
-	background-size: cover;
+	background-size: 100%;
+	background-attachment:fixed;
 }
 
 .theme1 {

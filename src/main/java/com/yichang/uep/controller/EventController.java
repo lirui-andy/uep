@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
@@ -184,6 +185,8 @@ public class EventController extends BaseController{
 		if(!signed){
 			model.addAttribute("eventId", eventId);
 			model.addAttribute("needSign", true);
+			model.addAttribute("editable", false);
+			model.addAttribute("showSaveBtn", false);
 		}else{
 			Optional<YEvent> event = eventRepo.findById(eventId);
 			if(event.isPresent()){
@@ -205,9 +208,21 @@ public class EventController extends BaseController{
 				
 				//当前是否可编辑（登陆人与录入人是同一个单位）
 				model.addAttribute("editable", currentUser().getOrgId() == event.get().getInputOrgId());
+				
+				boolean showSaveBtn = currentUser().getOrgId() == event.get().getInputOrgId();
+				showSaveBtn = showSaveBtn | hasAuthority("ROLE_110") | hasAuthority("ROLE_XZD");
+				model.addAttribute("showSaveBtn",showSaveBtn);
 			}
 		}
 		return "view";
+	}
+	
+	private boolean hasAuthority(String auth){
+		return SecurityContextHolder.getContext().getAuthentication()
+		.getAuthorities().stream()
+		.filter(f -> f.getAuthority().equalsIgnoreCase(auth))
+		.toArray().length > 0
+		;
 	}
 	
 	@GetMapping(path="/attach/{uuid}")
@@ -217,6 +232,9 @@ public class EventController extends BaseController{
 			String fileType = att.get().getFileType();
 			try(InputStream in = FileUtils.readFile(uuid)){
 				response.setContentType("image/"+fileType);
+				response.setHeader("Cache-Control", "public, max-age=86400");
+				response.setHeader("Pragma", "");
+				response.setHeader("Expires", "86400");
 				StreamUtils.copy(in, response.getOutputStream());
 				response.flushBuffer();
 			} catch(FileNotFoundException e){
