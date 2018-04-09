@@ -227,7 +227,7 @@
 										</div>
 										<div class="form-group">
 											<label for="input19" class="control-label">派出所备注:</label>
-												<input type="hidden" name="commentKey" value="EVENT_COMMENT_PCS">
+												<input type="hidden" name="commentKey" value="EVENT_COMMENT_PCS" th:if="${editable}">
 												<textarea th:readonly="${!editable}" th:text="${comments?.get('EVENT_COMMENT_PCS')}" name="commentVal_EVENT_COMMENT_PCS" id="input19" class="form-control" rows="3"></textarea>
 										</div>		
 									</div>
