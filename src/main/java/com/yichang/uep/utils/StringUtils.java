@@ -13,4 +13,8 @@ public class StringUtils extends org.springframework.util.StringUtils {
 	public static String nullDefault(String s, String defaultVal){
 		return s == null ? defaultVal : s;
 	}
+	
+	public static boolean equals(String s1, String s2){
+		return s1 != null && s2 != null && s1.equals(s2);
+	}
 }

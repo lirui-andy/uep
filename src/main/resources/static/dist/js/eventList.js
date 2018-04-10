@@ -48,14 +48,13 @@ function queryEvent(){
 					data.condition.eventType = currentMenu;
 					return JSON.stringify(data);
 				}
-
 			},
 			'rowCallback': function( row, data, index ) {
 				$(row).css("cursor","pointer");
 			  	$(row).on("click", function(){
 			  		window.open("/event/"+data.eventId);
 			  	});
-			  },
+			},
 			'columns':[
 				{'data':'eventTypeStr'},
 				{'data':'name'},
@@ -82,16 +81,32 @@ function _guessPageFromLocation(){
 }
 
 function _showPageTitle(){
-	var title = '新消息';
+	var title = '<span class="glyphicon glyphicon-bell"></span> 您有<a data-toggle="tooltip" onclick="loadNewMessage();" title="点击显示所有未签收消息" id="newCount" class="badge bg-red" data-original-title="点击显示所有未签收消息">0</a>条新消息';
 	if(currentMenu !=""){
 		title = Const.translateByGroupAndCode("EVENT_TYPE", currentMenu);
 	}
 	$(".list-title").html(title);
+
+	$('[data-toggle="tooltip"]').tooltip();
+}
+function loadNewMessage(){
+	currentMenu = "NEW";
+	queryEvent();
+}
+//获取新消息数量
+function _loadNewMessageCount(){
+	if($("#newCount").length == 0) return;
+	$.get("/event/newcount", function(data){
+		if(data.success){
+			$("#newCount").text(data.data);
+		}
+	});
 }
 
 $(function(){
 	_guessPageFromLocation();
 	_showPageTitle();
+	_loadNewMessageCount();
 	
 	$(".navbar-nav li").each(function(i, e){
 		if($(e).attr("data-eventType")== currentMenu){

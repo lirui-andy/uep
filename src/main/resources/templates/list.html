@@ -17,7 +17,7 @@
 				<section class="content">
 					<div class="box box-info">
 						<div class="box-header with-border">
-							<h3 class="box-title list-title"></h3>
+							<h5 class="box-title list-title"></h5>
 							<a class="btn btn-flat btn-xs btn-info pull-right" th:href="@{/edit}">信息录入</a>
 						</div>
 						<!-- /.box-header -->
@@ -47,9 +47,9 @@
 									<label for="eventTime" class="col-md-2 control-label">事件时间</label>
 									<div class="col-md-4 ">
 										<div class="input-group">
-										<input type="text" name="timeRange" class="form-control" id="timeRange" data-daterangepicker placeholder="">
+										<input type="text" name="timeRange" class="form-control" id="timeRange" data-default="" data-daterangepicker placeholder="">
 										<div class="input-group-addon" onclick="javascript:$('#timeRange').val('');">
-					                      <a class="fa fa-trash-o" href="javascript:$('#timeRange').val('');"></a>
+					                      <a class="fa fa-trash-o" href="javascript:" data-toggle="tooltip" data-original-title="点击清除输入的日期"></a>
 					                    </div>
 					                    </div>
 									</div>

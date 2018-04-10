@@ -114,9 +114,16 @@ public class EventManageImpl implements EventManage {
 	}
 	
 	
+	//查询单位所有未签收事件数量
+	@Override
+	public long findNeweventCount(int orgId) {
+		return eventRepo.count(unreadEventSpec(null, orgId));
+	}
+
 	//查询单位未签收事件
 	@Override
 	public Page<YEvent> findNewEvent(EventVO event, Integer orgId, Integer pageNum) {
+		event.setEventType(null);
 		return eventRepo.findAll( unreadEventSpec(event, orgId), pageRequest(pageNum));
 	}
 

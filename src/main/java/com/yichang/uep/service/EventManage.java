@@ -14,4 +14,6 @@ public interface EventManage {
 	public Page<YEvent> findEvent(EventVO event, Integer pageNum);
 	
 	public void receiveEvent(YUser rcvUser, int eventId, String rcvUserRealName);
+
+	public long findNeweventCount(int orgId);
 }

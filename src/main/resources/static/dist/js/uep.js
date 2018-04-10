@@ -56,5 +56,9 @@ $(function(){
 	});
 	$('[data-datepicker]').daterangepicker($.extend({},datepickerConfig,{"singleDatePicker": true}));
 	$('[data-daterangepicker]').daterangepicker(datepickerConfig);
-	$("[data-inputmask]").inputmask();
+	$('[data-daterangepicker]').each(function(i, e){
+		var v = $(e).attr("data-default");
+		$(e).val(v);
+	});
+	$('[data-toggle="tooltip"]').tooltip();
 });

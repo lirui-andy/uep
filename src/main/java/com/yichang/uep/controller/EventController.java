@@ -73,9 +73,9 @@ public class EventController extends BaseController{
 	@ResponseBody
 	public PageAdapter<YEvent> list(
 			@RequestBody RequestAdapter<EventVO> eventSearch){
-		int orgId = 1;
+		int orgId = currentUser().getOrgId();
 		Page<YEvent> page  = null;
-		if(eventSearch.getCondition() == null || StringUtils.isBlank(eventSearch.getCondition().getEventType())){
+		if(eventSearch.getCondition() != null && StringUtils.equals(eventSearch.getCondition().getEventType(), "NEW")){
 			page = eventManage.findNewEvent(eventSearch.getCondition(), 
 					orgId, eventSearch.getPage());
 		}
@@ -84,6 +84,17 @@ public class EventController extends BaseController{
 					eventSearch.getPage());
 		}
 		return PageAdapter.create(page, eventSearch.getDraw());
+	}
+	
+	/**
+	 * 查询新消息数量
+	 * @return
+	 */
+	@GetMapping("/newcount")
+	@ResponseBody
+	public CommonOperResult<Long> findNewMessageCount(){
+		long count = eventManage.findNeweventCount(currentUser().getOrgId());
+		return CommonOperResult.success(count);
 	}
 	
 	/**
