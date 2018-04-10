@@ -6,7 +6,7 @@ body{
 	background: #367fa9;
 	background-repeat: no-repeat;
 	background-position: 0 0;
-	background-size: 100%;
+	background-size: cover;
 	background-attachment:fixed;
 }
 
