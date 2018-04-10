@@ -59,6 +59,10 @@ body{
 	text-shadow: 0 0 5px #337ab7;
 	transition-duration: 0.2s;
 }
+
+.main-header .navbar{
+	background-color: #337ab7;
+}
 .theme1, .theme1 .main-header .navbar {
 	background: url(../img/bg1.jpg) no-repeat 0 -100px;
 /* 	background-attachment:fixed; */
