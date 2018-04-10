@@ -12,9 +12,19 @@ body{
 	width: 20px;
 	height: 20px;
 }
-
+.navbar .container{
+	position:relative;
+}
+.navbar-header{
+/* 	margin-top:35px; */
+	height:auto;
+	position: absolute;
+	top:50%;
+	transform:translateY(-50%);
+}
 .navbar-brand {
-	padding-left: 120px;
+	padding: 0 0 0 120px;
+	height:auto;
 }
 
 .navbar-brand {

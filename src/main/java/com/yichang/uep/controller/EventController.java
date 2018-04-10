@@ -148,13 +148,12 @@ public class EventController extends BaseController{
 	
 
 	@PostMapping("/update")
-	@ResponseBody
-	public CommonOperResult<?> update(EventVO event, final HttpServletRequest request){
+	public String update(EventVO event, final HttpServletRequest request){
 		final YUser currentUser = currentUser();
 		//备注属性
 		saveComments(event.getEventId(), currentUser, request);
 		
-		return CommonOperResult.success();
+				return "redirect:/event/"+event.getEventId();
 	}
 
 	//保存备注

@@ -30,7 +30,8 @@ body{
 .login-box-title {
 	line-height: 1.5em;
 	font-size: 30px;
-	text-shadow: 0 0 0.2em #fff, -0 -0 0.2em #fff;
+	color:white;
+	text-shadow: 0 0 0.2em #000, -0 -0 0.2em #000;
 }
 @media ( min-width : 768px) {
 	.login-box {
@@ -42,7 +43,7 @@ body{
 	.login-box-body {
 		padding-left: 200px;
 		background-image: url(../img/jinghui.png);
-		background-position: 20px 10px;
+		background-position: 20px 30px;
 		background-repeat: no-repeat;
 		background-size: 150px;
 	}
