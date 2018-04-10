@@ -46,11 +46,16 @@ function queryEvent(){
 				'data': function(data){
 					data.condition = $("#eventQueryForm").serializeObject();
 					data.condition.eventType = currentMenu;
-					console.log(data);
 					return JSON.stringify(data);
 				}
 
 			},
+			'rowCallback': function( row, data, index ) {
+				$(row).css("cursor","pointer");
+			  	$(row).on("click", function(){
+			  		window.open("/event/"+data.eventId);
+			  	});
+			  },
 			'columns':[
 				{'data':'eventTypeStr'},
 				{'data':'name'},
