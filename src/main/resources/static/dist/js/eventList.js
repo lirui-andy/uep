@@ -38,8 +38,12 @@ function queryEvent(){
 						e.genderStr = e.gender;
 						e.genderStr = Const.translateByGroupAndCode('GENDER', e.gender);
 						e.eventTypeStr = Const.translateByGroupAndCode('EVENT_TYPE', e.eventType);
+						if(!e.signed)
+							e.eventTypeStr+= '<i class="fa fa-rss text-yellow"></i>'
+							;
 						
 						e.name = '<a href="/event/'+e.eventId+'" target=_blank>'+e.name+'</a>';
+						
 					});
 					return json.data;
 				}, 
@@ -89,8 +93,11 @@ function _showPageTitle(){
 
 	$('[data-toggle="tooltip"]').tooltip();
 }
+
+//查询新消息列表
 function loadNewMessage(){
 	currentMenu = "NEW";
+	$("#eventQueryForm").get(0).reset();
 	queryEvent();
 }
 //获取新消息数量

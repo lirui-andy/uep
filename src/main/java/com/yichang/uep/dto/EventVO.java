@@ -34,8 +34,6 @@ public class EventVO implements Serializable{
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date eventTime;
 	
-	private String timeRange;
-	
 	private String idNum;
 	
 	private String briefInfo;
@@ -184,10 +182,5 @@ public class EventVO implements Serializable{
 	public void setEventTime(Date eventTime) {
 		this.eventTime = eventTime;
 	}
-	public String getTimeRange() {
-		return timeRange;
-	}
-	public void setTimeRange(String timeRange) {
-		this.timeRange = timeRange;
-	}
+
 }

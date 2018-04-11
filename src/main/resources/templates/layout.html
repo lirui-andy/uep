@@ -5,8 +5,8 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-	<meta name="_csrf" th:content="${_csrf.token}"/>
-	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<meta name="_csrf" th:content="${_csrf?.token}"/>
+	<meta name="_csrf_header" th:content="${_csrf?.headerName}"/>
 	  
   <title>未知名尸体处置及落水失踪人员</title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -32,7 +32,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
   <link rel="stylesheet" th:href="@{/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
   
   <!-- Theme style -->
-  <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}">
+  <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.css}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}">

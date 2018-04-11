@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yichang.uep.dto.CommentVO;
 import com.yichang.uep.dto.CommonOperResult;
+import com.yichang.uep.dto.EventListVO;
+import com.yichang.uep.dto.EventQueryVO;
 import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.dto.datatables.PageAdapter;
 import com.yichang.uep.dto.datatables.RequestAdapter;
@@ -71,8 +73,8 @@ public class EventController extends BaseController{
 	 */
 	@PostMapping(path="/list", consumes={"text/plain", "application/json"})
 	@ResponseBody
-	public PageAdapter<YEvent> list(
-			@RequestBody RequestAdapter<EventVO> eventSearch){
+	public PageAdapter<EventListVO> list(
+			@RequestBody RequestAdapter<EventQueryVO> eventSearch){
 		int orgId = currentUser().getOrgId();
 		Page<YEvent> page  = null;
 		if(eventSearch.getCondition() != null && StringUtils.equals(eventSearch.getCondition().getEventType(), "NEW")){
@@ -83,7 +85,8 @@ public class EventController extends BaseController{
 			page = eventManage.findEvent(eventSearch.getCondition(), 
 					eventSearch.getPage());
 		}
-		return PageAdapter.create(page, eventSearch.getDraw());
+		Page<EventListVO> newpage = eventManage.findSignedInfo(page, currentUser().getOrgId());
+		return PageAdapter.create(newpage, eventSearch.getDraw());
 	}
 	
 	/**

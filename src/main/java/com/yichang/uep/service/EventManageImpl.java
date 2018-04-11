@@ -3,6 +3,10 @@ package com.yichang.uep.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -11,13 +15,17 @@ import javax.persistence.criteria.Root;
 import javax.persistence.criteria.Subquery;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
+import com.yichang.uep.dto.EventListVO;
+import com.yichang.uep.dto.EventQueryVO;
 import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.model.YEventReceipt;
@@ -44,7 +52,7 @@ public class EventManageImpl implements EventManage {
 	}
 
 	//组装查询条件数组
-	private List<Predicate> commenSepc(final EventVO event, Root<YEvent> root, CriteriaBuilder cb) {
+	private List<Predicate> commenSepc(final EventQueryVO event, Root<YEvent> root, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(event == null) return predicates;
 		//事件类别 
@@ -71,7 +79,7 @@ public class EventManageImpl implements EventManage {
 	}
 	
 	//拼装未签收查询Specification
-	private Specification<YEvent> unreadEventSpec(final EventVO event, final Integer orgId){
+	private Specification<YEvent> unreadEventSpec(final EventQueryVO event, final Integer orgId){
 		Specification<YEvent> spec = new Specification<YEvent>() {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -95,7 +103,7 @@ public class EventManageImpl implements EventManage {
 	}
 	
 	//拼装普通查询Specification
-	private Specification<YEvent> eventSpec(final EventVO event){
+	private Specification<YEvent> eventSpec(final EventQueryVO event){
 		Specification<YEvent> spec = new Specification<YEvent>() {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -122,14 +130,14 @@ public class EventManageImpl implements EventManage {
 
 	//查询单位未签收事件
 	@Override
-	public Page<YEvent> findNewEvent(EventVO event, Integer orgId, Integer pageNum) {
+	public Page<YEvent> findNewEvent(EventQueryVO event, Integer orgId, Integer pageNum) {
 		event.setEventType(null);
 		return eventRepo.findAll( unreadEventSpec(event, orgId), pageRequest(pageNum));
 	}
 
 	//按条件查询事件
 	@Override
-	public Page<YEvent> findEvent(EventVO event,Integer pageNum) {	
+	public Page<YEvent> findEvent(EventQueryVO event,Integer pageNum) {	
 		return eventRepo.findAll( eventSpec(event), pageRequest(pageNum));
 	}
 
@@ -145,6 +153,34 @@ public class EventManageImpl implements EventManage {
 		recpt.setReceiptOrgName(rcvUser.getOrgName());
 		eventReceiptRepo.save(recpt);
 		
+	}
+
+	@Override
+	public Page<EventListVO> findSignedInfo(Page<YEvent> page, int orgId) {
+		
+		//事件ID列表
+		List<Integer> eventIds = page.getContent().stream()
+		.flatMap( f-> Stream.of(f.getEventId()) )
+		.collect(Collectors.toList());
+		
+		//找出给定的事件中，已经签收的事件
+		List<YEventReceipt> receipts = eventReceiptRepo.findAllByEventIdAndOrgId(eventIds, orgId);
+		Set<Integer> received = receipts.stream()
+			.flatMap(r -> Stream.of(r.getEventId()))
+			.collect(Collectors.toSet());
+		
+		//转换成EventListVO列表
+		List<EventListVO> list = page.getContent().stream().flatMap(e -> {
+			EventListVO vo = new EventListVO();
+			BeanUtils.copyProperties(e, vo);
+			vo.setSigned(received.contains(e.getEventId()));
+			return Stream.of(vo);
+		}).collect(Collectors.toList());
+		
+		Page<EventListVO> newpage = new PageImpl<EventListVO>(list, 
+				page.getPageable(), 
+				page.getTotalElements());
+		return newpage;
 	}
 
 }
