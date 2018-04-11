@@ -22,12 +22,11 @@
 						</div>
 						<!-- /.box-header -->
 						<div class="box-body">
-
 							<form class="form-horizontal" id="eventQueryForm">
 								<div class="form-group">
 									<label for="inputEmail3" class="col-md-2 control-label">姓名</label>
 									<div class="col-md-2">
-										<input type="text" name="name" class="form-control" id="inputEmail2" placeholder="">
+										<input type="text" name="name" class="form-control" id="inputEmail3" placeholder="">
 									</div>
 
 									<label for="idnum" class="col-md-2 control-label">身份证号</label>
@@ -52,6 +51,13 @@
 					                      <a class="fa fa-trash-o" href="javascript:" data-toggle="tooltip" data-original-title="点击清除输入的日期"></a>
 					                    </div>
 					                    </div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="inputKeyword">关键字<i class="fa fa-question-circle text-blue" data-toggle="tooltip" data-original-title="关键字用来搜索简要警情、人员情况或派出所备注。多个关键字之间用逗号隔开，最多只接受3个关键字。如果超过3个，只取前3个。"></i></label>
+									<div class="col-md-4">
+										<input type="text" name="keyword" class="form-control" id="inputKeyword" 
+										placeholder="搜索简要警情、人员情况或派出所备注">
 									</div>
 									<div class="col-md-1">
 										<button type="button" onclick="queryEvent();return false;" class="btn btn-default">查询</button>

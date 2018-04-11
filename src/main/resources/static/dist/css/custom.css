@@ -86,8 +86,7 @@ body{
 	#navbar-widescreen{display:none;}
 }
 
-.newmessage td:first-child{
-	position:relative;
+.newmessage{
 	cursor:pointer;
 }
 .newmessage .newflag{

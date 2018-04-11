@@ -2,10 +2,11 @@ package com.yichang.uep.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -28,6 +29,7 @@ import com.yichang.uep.dto.EventListVO;
 import com.yichang.uep.dto.EventQueryVO;
 import com.yichang.uep.dto.EventVO;
 import com.yichang.uep.model.YEvent;
+import com.yichang.uep.model.YEventComment;
 import com.yichang.uep.model.YEventReceipt;
 import com.yichang.uep.model.YUser;
 import com.yichang.uep.repo.EventReceiptRepo;
@@ -52,7 +54,7 @@ public class EventManageImpl implements EventManage {
 	}
 
 	//组装查询条件数组
-	private List<Predicate> commenSepc(final EventQueryVO event, Root<YEvent> root, CriteriaBuilder cb) {
+	private List<Predicate> commenSepc(final EventQueryVO event, Root<YEvent> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(event == null) return predicates;
 		//事件类别 
@@ -75,7 +77,35 @@ public class EventManageImpl implements EventManage {
 			predicates.add(cb.between(root.get("eventTime"), 
 					DateUtils.parse(s[0]), DateUtils.addDay(DateUtils.parse(s[1]), 1) ));
 		}
+		//关键字
+		if(!StringUtils.isBlank(event.getKeyword())){
+			predicates.add(cb.or(buildKeywordClause(event.getKeyword(), root, query, cb)));
+		}
 		return predicates;
+	}
+	
+	private Predicate[] buildKeywordClause(String keyword,Root<YEvent> root, CriteriaQuery<?> query, CriteriaBuilder cb){
+		String[] keywords = StringUtils.trimAllWhitespace(keyword).split("[\\,，]");
+		
+		List<Predicate> list = Stream.of(keywords)
+				.limit(3) //只接受前3个关键字
+				.flatMap( k -> {
+			String likeword = "%"+k+"%";
+			Subquery<YEventComment> subquery = query.subquery(YEventComment.class);
+			Root<YEventComment> subroot = subquery.from(YEventComment.class);
+			subquery.select(subroot);
+			subquery.where(
+					cb.equal(root.get("eventId"), subroot.get("eventId")),
+					cb.like(subroot.get("commentValue"), likeword ));
+			
+			return Stream.of(
+					cb.like(root.get("briefInfo"), likeword),
+					cb.like(root.get("detailInfo"), likeword),
+					cb.exists(subquery)
+					);
+		}).collect(Collectors.toList());
+		
+		return list.toArray(new Predicate[]{});
 	}
 	
 	//拼装未签收查询Specification
@@ -84,7 +114,7 @@ public class EventManageImpl implements EventManage {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public Predicate toPredicate(Root<YEvent> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicates = commenSepc(event, root, cb);
+				List<Predicate> predicates = commenSepc(event, root, query, cb);
 				
 				Subquery<YEventReceipt> subquery = query.subquery(YEventReceipt.class);
 				Root<YEventReceipt> subroot = subquery.from(YEventReceipt.class);
@@ -108,7 +138,7 @@ public class EventManageImpl implements EventManage {
 			private static final long serialVersionUID = 1L;
 			@Override
 			public Predicate toPredicate(Root<YEvent> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-				List<Predicate> predicates = commenSepc(event, root, cb);
+				List<Predicate> predicates = commenSepc(event, root, query, cb);
 				return query.where(predicates.toArray(new Predicate[]{} )).getRestriction();
 			}
 
@@ -162,12 +192,15 @@ public class EventManageImpl implements EventManage {
 		List<Integer> eventIds = page.getContent().stream()
 		.flatMap( f-> Stream.of(f.getEventId()) )
 		.collect(Collectors.toList());
+		Set<Integer> received = new HashSet<>();
 		
-		//找出给定的事件中，已经签收的事件
-		List<YEventReceipt> receipts = eventReceiptRepo.findAllByEventIdAndOrgId(eventIds, orgId);
-		Set<Integer> received = receipts.stream()
-			.flatMap(r -> Stream.of(r.getEventId()))
-			.collect(Collectors.toSet());
+		if(eventIds.size() > 0){
+			//找出给定的事件中，已经签收的事件
+			List<YEventReceipt> receipts = eventReceiptRepo.findAllByEventIdAndOrgId(eventIds, orgId);
+			received .addAll( receipts.stream()
+				.flatMap(r -> Stream.of(r.getEventId()))
+				.collect(Collectors.toSet()) );
+		}
 		
 		//转换成EventListVO列表
 		List<EventListVO> list = page.getContent().stream().flatMap(e -> {

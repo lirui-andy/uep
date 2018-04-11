@@ -6,6 +6,7 @@ public class EventQueryVO {
 	private String idNum;
 	private String gender;
 	private String timeRange;
+	private String keyword;
 	
 	public String getEventType() {
 		return eventType;
@@ -36,6 +37,12 @@ public class EventQueryVO {
 	}
 	public void setTimeRange(String timeRange) {
 		this.timeRange = timeRange;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	
 	
