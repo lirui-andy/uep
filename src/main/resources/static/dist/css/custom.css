@@ -85,3 +85,10 @@ body{
 @media(max-width:767px){
 	#navbar-widescreen{display:none;}
 }
+
+.newmessage td:first-child{
+	position:relative;
+	cursor:pointer;
+}
+.newmessage .newflag{
+}

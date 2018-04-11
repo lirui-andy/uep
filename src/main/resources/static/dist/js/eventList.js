@@ -39,7 +39,7 @@ function queryEvent(){
 						e.genderStr = Const.translateByGroupAndCode('GENDER', e.gender);
 						e.eventTypeStr = Const.translateByGroupAndCode('EVENT_TYPE', e.eventType);
 						if(!e.signed)
-							e.eventTypeStr+= '<i class="fa fa-rss text-yellow"></i>'
+							e.eventTypeStr+= '<small class="badge bg-yellow newflag">新</small>'
 							;
 						
 						e.name = '<a href="/event/'+e.eventId+'" target=_blank>'+e.name+'</a>';
@@ -54,8 +54,9 @@ function queryEvent(){
 				}
 			},
 			'rowCallback': function( row, data, index ) {
-				$(row).css("cursor","pointer");
-			  	$(row).on("click", function(){
+				$(row)
+					.addClass("newmessage")
+					.on("click", function(){
 			  		window.open("/event/"+data.eventId);
 			  	});
 			},
