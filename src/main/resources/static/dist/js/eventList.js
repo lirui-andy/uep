@@ -11,11 +11,13 @@ var tableDefaultOptions = {
 	      'autoWidth'   : false,
 		  'language': {
 	            'lengthMenu': '每页显示 _MENU_ 行',
-	            'zeroRecords': '未查询到数据',
-	            'info': '第 _PAGE_ 页/共 _PAGES_ 页',
-	            'infoEmpty': '未查询到数据',
+	            'zeroRecords': '未检索到数据，请去掉部分检索条件后重试，或检索其他类型。',
+	            'info': '第 _PAGE_ 页/共 _PAGES_ 页（显示第 _START_ ~ _END_条 / 共检索出 _MAX_ 条）',
+	            'infoEmpty': '未检索到数据',
 	            'infoFiltered': '(从 _MAX_ 条记录中筛选)',
 	            'loadingRecords':'加载中...',
+	            'loading':'正在搜索...',
+	            'processing':'正在搜索...',
 	            'paginate':{
 	            	'first':'第一页',
 	            	'last':'最后一页',
