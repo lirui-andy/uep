@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -193,6 +194,13 @@ public class EventController extends BaseController{
 	
 	@GetMapping("/{eventId}")
 	public String view(@PathVariable("eventId") Integer eventId, Model model){
+		
+		Optional<YEvent> event = eventRepo.findById(eventId);
+		if(!event.isPresent()){
+			logger.info("Try to view not existing event:"+eventId);
+			return "404";
+		}
+		
 		YEventReceipt rcpt = eventReceiptRepo.findTop1ByEventIdAndOrgId(eventId, currentUser().getOrgId());
 		boolean signed = rcpt != null;
 		if(!signed){
@@ -201,7 +209,6 @@ public class EventController extends BaseController{
 			model.addAttribute("editable", false);
 			model.addAttribute("showSaveBtn", false);
 		}else{
-			Optional<YEvent> event = eventRepo.findById(eventId);
 			if(event.isPresent()){
 				model.addAttribute("event", event.get());
 				

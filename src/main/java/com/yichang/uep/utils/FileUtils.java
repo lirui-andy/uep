@@ -8,11 +8,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import org.springframework.boot.system.ApplicationHome;
 import org.springframework.util.StreamUtils;
 
 public class FileUtils {
 	
-	static File dir = new File("c:/uep/upload");
+	public final static File home = new ApplicationHome(FileUtils.class).getDir();
+	
+//	static File dir = new File("c:/uep/upload");
+	static File dir = new File(home, "upload");
 	public synchronized static String genId(){
         return UUID.randomUUID().toString().replace("-", "");  
 	}

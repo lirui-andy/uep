@@ -10,4 +10,8 @@ public class IndexController {
 	public String index(){
 		return "redirect:/list";
 	}
+	@RequestMapping(path={"/error", "/500"})
+	public String error(){
+		return "500";
+	}
 }

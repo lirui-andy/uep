@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout::head">
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav theme2">
+	<div class="wrapper">
+
+		<header th:replace="layout::mainHeader"> </header>
+		<!-- Full Width Column -->
+		<div class="content-wrapper">
+			<div class="container">
+				<!-- Content Header (Page header) -->
+				<section th:replace="layout::contentHeader"></section>
+
+				<!-- Main content -->
+				<section class="content">
+			      <div class="error-page">
+			        <div class="">
+			          <h3><i class="fa fa-warning text-yellow"></i> 出错了!</h3>
+			          <p>
+			            	服务器出现了一些错误，请过几分钟后重试一次。如果问题仍然出现，请联系系统管理员。
+			          </p>
+			        </div>
+			        <!-- /.error-content -->
+			      </div>
+			      <!-- /.error-page -->
+			    </section>
+				<!-- /.content -->
+			</div>
+			<!-- /.container -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer class="main-footer" th:replace="layout::footer"> </footer>
+	</div>
+	<!-- ./wrapper -->
+	<script type="text/javascript">
+</script>
+</body>
+</html>
