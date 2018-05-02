@@ -79,7 +79,7 @@ public class EventManageImpl implements EventManage {
 		}
 		//关键字
 		if(!StringUtils.isBlank(event.getKeyword())){
-			predicates.add(cb.or(buildKeywordClause(event.getKeyword(), root, query, cb)));
+			predicates.add(cb.and(buildKeywordClause(event.getKeyword(), root, query, cb)));
 		}
 		return predicates;
 	}
