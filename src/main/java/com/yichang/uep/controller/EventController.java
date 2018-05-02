@@ -47,6 +47,7 @@ import com.yichang.uep.repo.AttachmentRepo;
 import com.yichang.uep.repo.EventCommentRepo;
 import com.yichang.uep.repo.EventReceiptRepo;
 import com.yichang.uep.repo.EventRepo;
+import com.yichang.uep.service.CommentManage;
 import com.yichang.uep.service.EventManage;
 import com.yichang.uep.utils.FileUtils;
 import com.yichang.uep.utils.StringUtils;
@@ -66,6 +67,9 @@ public class EventController extends BaseController{
 	
 	@Autowired
 	EventManage eventManage;
+	
+	@Autowired
+	CommentManage commentManage;
 	
 	/**
 	 * 查询事件列表
@@ -174,19 +178,12 @@ public class EventController extends BaseController{
 	//保存备注
 	private void saveComments(final int eventId,  final YUser currentUser,
 			final HttpServletRequest request) {
-		final Date now = new Date();
 		String[] commentCodes = request.getParameterValues("commentKey");
 		if(commentCodes != null){
 			Stream.of(commentCodes).forEach(code -> {
 				String val = request.getParameter("commentVal_"+code);
 				if(val != null){
-					YEventComment cmt = new YEventComment();
-					cmt.setCommentType(code);
-					cmt.setCommentValue(val);
-					cmt.setEventId(eventId);
-					cmt.setOperTime(now);
-					cmt.setOperUser(currentUser.getUserName());
-					eventCommentRepo.save(cmt);
+					commentManage.saveComment(code, val, eventId, currentUser.getUserName());
 				}
 			});
 		}

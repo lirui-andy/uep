@@ -77,6 +77,18 @@ public class EventManageImpl implements EventManage {
 			predicates.add(cb.between(root.get("eventTime"), 
 					DateUtils.parse(s[0]), DateUtils.addDay(DateUtils.parse(s[1]), 1) ));
 		}
+		//是否查清
+		if(!StringUtils.isBlank(event.getCheckedClear())){
+			Subquery<YEventComment> subquery = query.subquery(YEventComment.class);
+			Root<YEventComment> subroot = subquery.from(YEventComment.class);
+			subquery.select(subroot);
+			subquery.where(
+					cb.equal(root.get("eventId"), subroot.get("eventId")),
+					cb.equal(subroot.get("active"), Boolean.TRUE),
+					cb.equal(subroot.get("commentType"), "EVENT_CHECKED_CLEAR"),
+					cb.equal(subroot.get("commentValue"),  event.getCheckedClear()));
+			predicates.add(cb.exists(subquery));
+		}
 		//关键字
 		if(!StringUtils.isBlank(event.getKeyword())){
 			predicates.add(cb.and(buildKeywordClause(event.getKeyword(), root, query, cb)));
@@ -96,12 +108,17 @@ public class EventManageImpl implements EventManage {
 			subquery.select(subroot);
 			subquery.where(
 					cb.equal(root.get("eventId"), subroot.get("eventId")),
+					cb.equal(subroot.get("active"), Boolean.TRUE),
 					cb.like(subroot.get("commentValue"), likeword ));
 			
 			return Stream.of(
-					cb.like(root.get("briefInfo"), likeword),
-					cb.like(root.get("detailInfo"), likeword),
-					cb.exists(subquery)
+					cb.or(
+						cb.like(root.get("briefInfo"), likeword),
+						cb.like(root.get("detailInfo"), likeword),
+						cb.like(root.get("coOrgName"), likeword),
+						cb.like(root.get("rcvOrgName"), likeword),
+						cb.exists(subquery)
+					)
 					);
 		}).collect(Collectors.toList());
 		

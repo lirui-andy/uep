@@ -62,20 +62,19 @@
 								<div class="form-horizontal">
 									<div class="form-group">
 										<label for="input1" class="col-md-2 control-label">类别</label>
-										<div class="col-md-4 form-control-static" >
-											<span id="input1" th:text="${event?.eventType}" 
+										<div class="col-md-4" >
+											<span id="input1" th:text="${event?.eventType}" class="form-control"
 											data-const data-constgroup="EVENT_TYPE" 
 											th:attr="data-constval=${event?.eventType}" ></span>
 										</div>
 	
 										<label for="input2" class="col-md-1 control-label">是否查清</label>
-										<div class="col-md-4 form-control-static" th:unless="${editable}">
+										<div class="col-md-4" th:unless="${editable}">
 											<span id="input2" data-const th:data-constVal="${comments?.get('EVENT_CHECKED_CLEAR')}" 
-												data-constGroup="EVENT_CHECKED_CLEAR" >
+												data-constGroup="EVENT_CHECKED_CLEAR"  class="form-control">
 											</span>
 										</div>
 										<div class="col-md-4" th:if="${editable}" >
-											
 											<input type="hidden" name="commentKey" value="EVENT_CHECKED_CLEAR">
 											<select id="input2" th:data-constVal="${comments?.get('EVENT_CHECKED_CLEAR')}" name="commentVal_EVENT_CHECKED_CLEAR" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
 											</select>
@@ -83,59 +82,59 @@
 									</div>
 									<div class="form-group">
 										<label for="input3" class="col-md-2 control-label">接警单位</label>
-										<div class="col-md-4 form-control-static">
-											<span id="input3" data-const data-constGroup="RECEIVE_EVENT_ORG" th:data-constval="${event?.rcvOrgCode}"></span>
+										<div class="col-md-4">
+											<span id="input3" th:text="${event?.rcvOrgName}" class="form-control"></span>
 										</div>
 										<label for="input4" class="col-md-1 control-label">处警民警</label>
-										<div class="col-md-4 form-control-static">
-											<span  id="input4" th:text="${event?.handlerName}"/>
+										<div class="col-md-4">
+											<span  id="input4" th:text="${event?.handlerName}"  class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input5" class="col-md-2 control-label">报警人</label>
-										<div class="col-md-4 form-control-static">
-											<span  id="input5" th:text="${event?.reportorName}"/>
+										<div class="col-md-4">
+											<span  id="input5" th:text="${event?.reportorName}" class="form-control"/>
 										</div>
 										<label for="input6" class="col-md-1 control-label">报警电话</label>
-										<div class="col-md-4 form-control-static">
-											<span  id="input6" th:text="${event?.reportorTel}"/>
+										<div class="col-md-4">
+											<span  id="input6" th:text="${event?.reportorTel}" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input7" class="col-md-2 control-label">协查单位</label>
-										<div class="col-md-4 form-control-static">
-											<span id="input7" data-const data-constGroup="CO_ORG" th:data-constval="${event?.coOrgName}"></span>
+										<div class="col-md-4">
+											<span id="input7" th:text="${event?.coOrgName}" class="form-control"></span>
 										</div>
 										
 										<label for="input8" class="col-md-1 control-label">联系人</label>
-										<div class="col-md-2 form-control-static">
-											<span id="input8" th:text="${event?.coOrgContact}"/>
+										<div class="col-md-2">
+											<span id="input8" th:text="${event?.coOrgContact}" class="form-control"/>
 										</div>
 										<label for="input9" class="col-md-1 control-label">电话</label>
-										<div class="col-md-2 form-control-static">
-											<span id="input9" th:text="${event?.coOrgTel}"/>
+										<div class="col-md-2">
+											<span id="input9" th:text="${event?.coOrgTel}" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input10" class="col-md-2 control-label">姓名</label>
-										<div class="col-md-4 form-control-static">
-											<span id="input10" th:text="${event?.name}"/>
+										<div class="col-md-4">
+											<span id="input10" th:text="${event?.name}" class="form-control"/>
 										</div>
 										
 										<label for="gender" class="col-md-1 control-label">性别</label>
-										<div class="col-md-2 form-control-static">
-											<span id="gender" th:data-constval="${event?.gender}" data-constGroup="GENDER" data-const/>
+										<div class="col-md-2 ">
+											<span id="gender" th:data-constval="${event?.gender}" data-constGroup="GENDER" data-const class="form-control"/>
 										</select>
 										</div>
 										<label for="input12" class="col-md-1 control-label">事件时间</label>
-										<div class="col-md-2 form-control-static">
-											<span id="input12" th:text="${event?.eventTime}"/>
+										<div class="col-md-2">
+											<span id="input12" th:text="${event?.eventTime}" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input13" class="col-md-2 control-label">身份证号</label>
-										<div class="col-md-4 form-control-static">
-											<span id="input13" th:text="${event?.idNum}"/>
+										<div class="col-md-4">
+											<span id="input13" th:text="${event?.idNum}" class="form-control"/>
 										</div>
 										<label for="input14" class="col-md-1 control-label">图片</label>
 										<div class="col-md-4 form-control-static">
@@ -159,76 +158,25 @@
 											<label for="input16" class="control-label">人员情况:</label>
 												<textarea th:text="${event?.detailInfo}" readonly id="input16" name="detailInfo" class="form-control" rows="3"></textarea>
 										</div>
-										<!-- 110备注 : 不具备110权限时，只读-->
-										<div class="form-group" th:unless="${#authorization.expression('hasRole(''ROLE_110'')')}">
-											<!-- 没有分配 ROLE_110权限 -->
-											<label for="" class="control-label">110备注:</label>
-											<div class="form-control-static row" id="110_comment">
-								                <label class="col-md-3 col-md-offset-2" >
-								                	<input type="checkbox" disabled onchange="javascript:$('#commentVal_EVENT_NOTIFY_CITY').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_CITY') == '1'}" class="flat-blue">
-								                  	是否通知市局
-								                </label>
-								                <label class="col-md-3">
-								                	<input type="checkbox" disabled onchange="javascript:$('#commentVal_EVENT_NOTIFY_OTHER').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_OTHER') == '1'}"  class="flat-blue">
-								                  	是否通知其他分局
-								                </label>
-											</div>
-										</div>	
 										<!-- 110备注 : 具备110权限时，可改-->
-										<div class="form-group" th:if="${#authorization.expression('hasRole(''ROLE_110'')')}">
+										<div class="form-group">
 											<label for="" class="control-label">110备注:</label>
-											<div class="form-control-static row" id="110_comment">
-								                <label class="col-md-3 col-md-offset-2" >
-								                	<input type="hidden" id="commentKey_EVENT_NOTIFY_CITY" name="commentKey" value="EVENT_NOTIFY_CITY">
-								                	<input type="hidden" id="commentVal_EVENT_NOTIFY_CITY" name="commentVal_EVENT_NOTIFY_CITY" th:value="*{comments?.get('EVENT_NOTIFY_CITY')}?:'0'">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_NOTIFY_CITY').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_CITY') == '1'}" class="flat-blue">
-								                  	是否通知市局
-								                </label>
-								                <label class="col-md-3">
-								                	<input type="hidden" id="commentKey_EVENT_NOTIFY_OTHER" name="commentKey" value="EVENT_NOTIFY_OTHER">
-								                	<input type="hidden" id="commentVal_EVENT_NOTIFY_OTHER" name="commentVal_EVENT_NOTIFY_OTHER" th:value="*{comments?.get('EVENT_NOTIFY_OTHER')}?:'0'">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_NOTIFY_OTHER').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_NOTIFY_OTHER') == '1'}"  class="flat-blue">
-								                  	是否通知其他分局
-								                </label>
-											</div>
+											<input type="hidden" name="commentKey" value="EVENT_COMMENT_110" th:if="${#authorization.expression('hasRole(''ROLE_110'')')}">
+											<textarea th:readonly="${!#authorization.expression('hasRole(''ROLE_110'')')}" th:text="${comments?.get('EVENT_COMMENT_110')}" 
+												name="commentVal_EVENT_COMMENT_110" id="input18" class="form-control" rows="3"></textarea>
 										</div>	
-										<!-- 不具备刑侦队权限：只读 -->
-										<div class="form-group" th:unless="${#authorization.expression('hasRole(''ROLE_XZD'')')}">
-											<!-- 没有分配 ROLE_XZD权限 -->
-											<label for="" class="control-label">刑侦队备注:</label>
-											<div class="form-control-static row">
-								                <label class="col-md-3 col-md-offset-2">
-								                	<input type="checkbox" disabled onchange="javascript:$('#commentVal_EVENT_XZ_DNA').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_XZ_DNA') == '1'}" class="flat-blue">
-								                  	是否采集DNA
-								                </label>
-								                <label class="col-md-3">
-								                	<input type="checkbox" disabled onchange="javascript:$('#commentVal_EVENT_XZ_OTHER').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_XZ_OTHER') == '1'}" class="flat-blue">
-								                  	是否通报其他单位
-								                </label>
-											</div>
-										</div>
 										<!-- 具备刑侦队权限：可改 -->
-										<div class="form-group" th:if="${#authorization.expression('hasRole(''ROLE_XZD'')')}">
-											<label for="" class="control-label">刑侦队备注:</label>
-											<div class="form-control-static row">
-								                <label class="col-md-3 col-md-offset-2">
-								                	<input type="hidden" id="commentKey_EVENT_XZ_DNA" name="commentKey" value="EVENT_XZ_DNA">
-								                	<input type="hidden" id="commentVal_EVENT_XZ_DNA" name="commentVal_EVENT_XZ_DNA" th:value="*{comments?.get('EVENT_XZ_DNA')}?:'0'">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_XZ_DNA').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_XZ_DNA') == '1'}" class="flat-blue">
-								                  	是否采集DNA
-								                </label>
-								                <label class="col-md-3">
-								                	<input type="hidden" id="commentKey_EVENT_XZ_OTHER" name="commentKey" value="EVENT_XZ_OTHER">
-								                	<input type="hidden" id="commentVal_EVENT_XZ_OTHER" name="commentVal_EVENT_XZ_OTHER" th:value="*{comments?.get('EVENT_XZ_OTHER')}?:'0'">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_XZ_OTHER').val(this.checked?1:0);" th:checked="${comments?.get('EVENT_XZ_OTHER') == '1'}" class="flat-blue">
-								                  	是否通报其他单位
-								                </label>
-											</div>
+										<div class="form-group">
+											<label for="input18" class="control-label">刑侦队备注:</label>
+											<input type="hidden" name="commentKey" value="EVENT_COMMENT_XZZD" th:if="${#authorization.expression('hasRole(''ROLE_XZD'')')}">
+											<textarea th:readonly="${!#authorization.expression('hasRole(''ROLE_XZD'')')}" th:text="${comments?.get('EVENT_COMMENT_XZZD')}" 
+												name="commentVal_EVENT_COMMENT_XZZD" id="input18" class="form-control" rows="3"></textarea>
 										</div>
 										<div class="form-group">
 											<label for="input19" class="control-label">派出所备注:</label>
 												<input type="hidden" name="commentKey" value="EVENT_COMMENT_PCS" th:if="${editable}">
-												<textarea th:readonly="${!editable}" th:text="${comments?.get('EVENT_COMMENT_PCS')}" name="commentVal_EVENT_COMMENT_PCS" id="input19" class="form-control" rows="3"></textarea>
+												<textarea th:readonly="${!editable}" th:text="${comments?.get('EVENT_COMMENT_PCS')}" 
+													name="commentVal_EVENT_COMMENT_PCS" id="input19" class="form-control" rows="3"></textarea>
 										</div>		
 									</div>
 								</div>

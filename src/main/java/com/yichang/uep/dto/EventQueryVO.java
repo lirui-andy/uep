@@ -7,6 +7,7 @@ public class EventQueryVO {
 	private String gender;
 	private String timeRange;
 	private String keyword;
+	private String checkedClear;
 	
 	public String getEventType() {
 		return eventType;
@@ -44,6 +45,10 @@ public class EventQueryVO {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-	
-	
+	public String getCheckedClear() {
+		return checkedClear;
+	}
+	public void setCheckedClear(String checkedClear) {
+		this.checkedClear = checkedClear;
+	}
 }

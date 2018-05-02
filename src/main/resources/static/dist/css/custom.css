@@ -91,3 +91,4 @@ body{
 }
 .newmessage .newflag{
 }
+#eventTable td:first-child{white-space:nowrap;}

@@ -42,7 +42,7 @@
 									<div class="form-group">
 										<label for="input3" class="col-md-2 control-label">接警单位</label>
 										<div class="col-md-4">
-											<select id="input3" name="rcvOrgCode" data-constGroup="RECEIVE_EVENT_ORG" class="form-control no-padding"></select>
+											<input id="input3" name="rcvOrgName"  class="form-control">
 										</div>
 										<label for="input4" class="col-md-2 control-label">处警民警</label>
 										<div class="col-md-4">
@@ -62,9 +62,7 @@
 									<div class="form-group">
 										<label for="input7" class="col-md-2 control-label">协查单位</label>
 										<div class="col-md-4">
-											<select id="input7" name="coOrgName" data-constGroup="CO_ORG" class="form-control no-padding">
-												<option value="">无</option>
-											</select>
+											<input id="input7" name="coOrgName" class="form-control">
 										</div>
 										
 										<label for="input8" class="col-md-1 control-label">联系人</label>
@@ -114,40 +112,17 @@
 											<label for="input16" class="control-label">人员情况:</label>
 												<textarea id="input16" name="detailInfo" class="form-control" rows="3"></textarea>
 										</div>
-										<div class="form-group">
-											<label for="" class="control-label">110备注:</label>
-											<div class="form-control-static row">
-												<label class="col-md-2"></label>
-								                <label class="col-md-3">
-								                	<input type="hidden" id="commentKey_EVENT_NOTIFY_CITY" name="commentKey" value="EVENT_NOTIFY_CITY">
-								                	<input type="hidden" id="commentVal_EVENT_NOTIFY_CITY" name="commentVal_EVENT_NOTIFY_CITY" value="0">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_NOTIFY_CITY').val(this.checked?1:0);" class="flat-blue">
-								                  	是否通知市局
-								                </label>
-								                <label class="col-md-3">
-								                	<input type="hidden" id="commentKey_EVENT_NOTIFY_OTHER" name="commentKey" value="EVENT_NOTIFY_OTHER">
-								                	<input type="hidden" id="commentVal_EVENT_NOTIFY_OTHER" name="commentVal_EVENT_NOTIFY_OTHER" value="0">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_NOTIFY_OTHER').val(this.checked?1:0);" class="flat-blue">
-								                  	是否通知其他分局
-								                </label>
-											</div>
+										<div class="form-group" th:if="${#authorization.expression('hasRole(''ROLE_110'')')}">
+											<label for="input17" class="control-label">110备注:</label>
+											<input type="hidden" name="commentKey" value="EVENT_COMMENT_110">
+											<textarea id="input17" name="commentVal_EVENT_COMMENT_110" class="form-control" rows="3"></textarea>
+
 										</div>	
-										<div class="form-group">
-											<label for="" class="control-label">刑侦队备注:</label>
-											<div class="form-control-static row">
-								                <label class="col-md-3 col-md-offset-2">
-								                	<input type="hidden" id="commentKey_EVENT_XZ_DNA" name="commentKey" value="EVENT_XZ_DNA">
-								                	<input type="hidden" id="commentVal_EVENT_XZ_DNA" name="commentVal_EVENT_XZ_DNA" value="0">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_XZ_DNA').val(this.checked?1:0);" class="flat-blue">
-								                  	是否采集DNA
-								                </label>
-								                <label class="col-md-3">
-								                	<input type="hidden" id="commentKey_EVENT_XZ_OTHER" name="commentKey" value="EVENT_XZ_OTHER">
-								                	<input type="hidden" id="commentVal_EVENT_XZ_OTHER" name="commentVal_EVENT_XZ_OTHER" value="0">
-								                	<input type="checkbox" onchange="javascript:$('#commentVal_EVENT_XZ_OTHER').val(this.checked?1:0);" class="flat-blue">
-								                  	是否通报其他单位
-								                </label>
-											</div>
+										<div class="form-group" th:if="${#authorization.expression('hasRole(''ROLE_XZD'')')}">
+											<label for="input18" class="control-label">刑侦队备注:</label>
+											<input type="hidden" name="commentKey" value="EVENT_COMMENT_XZZD">
+											<textarea id="input18" name="commentVal_EVENT_COMMENT_XZZD" class="form-control" rows="3"></textarea>
+
 										</div>
 										<div class="form-group">
 											<label for="input19" class="control-label">派出所备注:</label>

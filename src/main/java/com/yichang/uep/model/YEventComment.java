@@ -35,6 +35,9 @@ public class YEventComment implements Serializable {
 
 	@Column(name="oper_user")
 	private String operUser;
+	
+	@Column(name="active")
+	private Boolean active;
 
 	public YEventComment() {
 	}
@@ -85,6 +88,14 @@ public class YEventComment implements Serializable {
 
 	public void setOperUser(String operUser) {
 		this.operUser = operUser;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 }

@@ -15,4 +15,6 @@ public interface EventCommentRepo extends JpaRepository<YEventComment, Integer> 
 	@Query(value="select * from y_event_comment where comment_id in (select max(comment_id) as comment_id from  y_event_comment where event_id=?1 group by comment_type)"
 			,nativeQuery=true)
 	public List<YEventComment> findLatestByEventId(Integer eventId);
+
+	public List<YEventComment> findByCommentTypeAndAndEventId(String cmtCode, int eventId);
 }
