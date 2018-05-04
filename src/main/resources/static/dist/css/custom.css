@@ -92,3 +92,8 @@ body{
 .newmessage .newflag{
 }
 #eventTable td:first-child{white-space:nowrap;}
+
+#eventTable .event-type-1{background-color:#5FD9CD; color:WHITE;}
+#eventTable .event-type-2{background-color:#EAF786; color:white;}
+#eventTable .event-type-3{background-color:#B8FFB8; color:BLACK;}
+#eventTable .event-type-4{background-color:#B8F4FF; color:BLACK;}

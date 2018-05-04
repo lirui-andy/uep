@@ -43,8 +43,8 @@ function queryEvent(){
 						if(!e.signed)
 							e.eventTypeStr+= '<small class="badge bg-yellow newflag">新</small>'
 							;
-						
-						e.name = '<a href="/event/'+e.eventId+'" target=_blank>'+e.name+'</a>';
+						if(!e.name || e.name == "") e.name = "无";
+//						e.name = '<a href="/event/'+e.eventId+'" target=_blank>'+e.name+'</a>';
 						
 					});
 					return json.data;
@@ -57,7 +57,7 @@ function queryEvent(){
 			},
 			'rowCallback': function( row, data, index ) {
 				$(row)
-					.addClass("newmessage")
+					.addClass("disabled event-type-"+data.eventType)
 					.on("click", function(){
 			  		window.open("/event/"+data.eventId);
 			  	});

@@ -29,22 +29,23 @@
 										<input type="text" name="name" class="form-control" id="inputEmail3" placeholder="">
 									</div>
 
-									<label for="idnum" class="col-md-2 control-label">身份证号</label>
-									<div class="col-md-3">
-										<input type="text" name="idNum" class="form-control" id="idnum" placeholder="">
-									</div>
-
 									<label for="gender" class="col-md-1 control-label">性别</label>
-									<div class="col-md-1">
+									<div class="col-md-2">
 										<select id="gender" name="gender" data-constGroup="GENDER" class="form-control no-padding">
 										<option value="">不限</option>
 										</select>
 									</div>
+									
+									<label for="idnum" class="col-md-2 col-lg-1 control-label">身份证号</label>
+									<div class="col-md-3">
+										<input type="text" name="idNum" class="form-control" id="idnum" placeholder="">
+									</div>
+
 
 								</div>
 								<div class="form-group">
 									<label for="eventTime" class="col-md-2 control-label">事件时间</label>
-									<div class="col-md-4 ">
+									<div class="col-md-5 ">
 										<div class="input-group">
 										<input type="text" name="timeRange" class="form-control" id="timeRange" data-default="" data-daterangepicker placeholder="">
 										<div class="input-group-addon" onclick="javascript:$('#timeRange').val('');">
@@ -52,8 +53,8 @@
 					                    </div>
 					                    </div>
 									</div>
-									<label for="checkedClear" class="col-md-2 control-label">是否查清</label>
-									<div class="col-md-4">
+									<label for="checkedClear" class="col-md-2 col-lg-1 control-label">是否查清</label>
+									<div class="col-md-3">
 										<select id="checkedClear" name="checkedClear" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
 										<option value="">不限</option>
 										</select>
@@ -61,7 +62,7 @@
 								</div>
 								<div class="form-group">
 									<label class="col-md-2 control-label" for="inputKeyword">关键字<i class="fa fa-question-circle text-blue" data-toggle="tooltip" data-original-title="多个关键字之间用逗号隔开，最多只接受3个关键字。如果超过3个，只取前3个。"></i></label>
-									<div class="col-md-4 ">
+									<div class="col-md-5 ">
 										<div class="input-group">
 										<input type="text" name="keyword" class="form-control" id="inputKeyword" 
 										placeholder="多个关键字之间用逗号分隔">
@@ -71,7 +72,7 @@
 					                    </div>
 										
 									</div>
-									<div class="col-md-1">
+									<div class="col-md-2">
 										<button type="button" onclick="queryEvent();return false;" class="btn btn-default">查询</button>
 									</div>
 								</div>
@@ -81,8 +82,8 @@
 								<table class="table table-hover table-bordered" id="eventTable">
 									
 									<thead>
-										<tr>
-											<th>类别</th>
+										<tr class="bg-aqua">
+											<th style="height:2.2em;">类别</th>
 											<th>姓名</th>
 											<th>性别</th>
 											<th>身份证号</th>
