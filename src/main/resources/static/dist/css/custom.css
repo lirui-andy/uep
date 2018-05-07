@@ -91,9 +91,17 @@ body{
 }
 .newmessage .newflag{
 }
-#eventTable td:first-child{white-space:nowrap;}
 
-#eventTable .event-type-1{background-color:#5FD9CD; color:WHITE;}
-#eventTable .event-type-2{background-color:#EAF786; color:white;}
-#eventTable .event-type-3{background-color:#B8FFB8; color:BLACK;}
-#eventTable .event-type-4{background-color:#B8F4FF; color:BLACK;}
+#eventTable td{white-space:nowrap;}
+#eventTable .event-type-1,
+#eventTable .event-type-2,
+#eventTable .event-type-3,
+#eventTable .event-type-4{ color:black; cursor:pointer;}
+#eventTable .event-type-1{background-color:#e8fbf9;}
+#eventTable .event-type-2{background-color:#fbfdeb;}
+#eventTable .event-type-3{background-color:#e8fbe8;}
+#eventTable .event-type-4{background-color:#f6edf7;}
+#eventTable .event-type-1:hover,
+#eventTable .event-type-2:hover,
+#eventTable .event-type-3:hover,
+#eventTable .event-type-4:hover{color:#f39c12; }
