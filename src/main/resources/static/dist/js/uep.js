@@ -54,7 +54,9 @@ $(function(){
 //		if (srcEvent)
 //			eval(srcEvent);
 	});
-	$('[data-datepicker]').daterangepicker($.extend({},datepickerConfig,{"singleDatePicker": true}));
+	$('[data-datepicker]').daterangepicker($.extend({},
+			datepickerConfig,
+			{"singleDatePicker": true,"timePicker": true,"timePicker24Hour": true, 'locale':{'format':'YYYY-MM-DD HH:mm'}}));
 	$('[data-daterangepicker]').daterangepicker(datepickerConfig);
 	$('[data-daterangepicker]').each(function(i, e){
 		var v = $(e).attr("data-default");

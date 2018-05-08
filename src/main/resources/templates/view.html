@@ -128,7 +128,7 @@
 										</div>
 										<label for="input12" class="col-md-1 control-label">事件时间</label>
 										<div class="col-md-2">
-											<span id="input12" th:text="${event?.eventTime}" class="form-control"/>
+											<span id="input12" th:text="${#dates.format(event?.eventTime, 'yyyy-MM-dd HH:mm')}" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
