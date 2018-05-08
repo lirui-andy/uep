@@ -5,6 +5,7 @@
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav theme2">
 
+<script th:src="@{/bower_components/jquery-validation/dist/jquery.validate.min.js}"></script>
 <script th:src="@{/dist/js/eventEdit.js}"></script>
 	<div class="wrapper">
 
@@ -22,7 +23,7 @@
 							<h3 class="box-title">信息录入</h3>
 						</div>
 						<!-- /.box-header -->
-						<form class="form" th:action="@{/event/save}" method="POST" enctype="multipart/form-data">
+						<form id="eventEditForm" class="form" th:action="@{/event/save}" method="POST" enctype="multipart/form-data">
 							<div class="box-body">
 								<div class="form-horizontal">
 									<div class="form-group">
@@ -32,7 +33,7 @@
 											</select>
 										</div>
 	
-										<label for="input2" class="col-md-2 control-label">是否查清</label>
+										<label for="input2" class="col-md-2 col-lg-1 control-label">是否查清</label>
 										<div class="col-md-4">
 											<input type="hidden" name="commentKey" value="EVENT_CHECKED_CLEAR">
 											<select id="input2" name="commentVal_EVENT_CHECKED_CLEAR" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
@@ -42,21 +43,25 @@
 									<div class="form-group">
 										<label for="input3" class="col-md-2 control-label">接警单位</label>
 										<div class="col-md-4">
-											<input id="input3" name="rcvOrgName"  class="form-control">
+											<input id="input3" name="rcvOrgName"  class="form-control"
+											data-rule-required="true" data-msg-required="请输入接警单位">
 										</div>
-										<label for="input4" class="col-md-2 control-label">处警民警</label>
+										<label for="input4" class="col-md-2 col-lg-1 control-label">处警民警</label>
 										<div class="col-md-4">
-											<input type="text" id="input4" name="handlerName" class="form-control"/>
+											<input type="text" id="input4" name="handlerName" class="form-control"
+											data-rule-required="true" data-msg-required="请输入处警民警"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input5" class="col-md-2 control-label">报警人</label>
 										<div class="col-md-4">
-											<input type="text" id="input5" name="reportorName" class="form-control"/>
+											<input type="text" id="input5" name="reportorName" class="form-control"
+											data-rule-required="true" data-msg-required="请输入报警人">
 										</div>
-										<label for="input6" class="col-md-2 control-label">报警电话</label>
+										<label for="input6" class="col-md-2 col-lg-1 control-label">报警电话</label>
 										<div class="col-md-4">
-											<input type="text" id="input6" name="reportorTel" class="form-control"/>
+											<input type="text" id="input6" name="reportorTel" class="form-control"
+											data-rule-required="true" data-msg-required="请输入报警电话"/>
 										</div>
 									</div>
 									<div class="form-group">
@@ -136,11 +141,13 @@
 									<div class="form-group">
 										<label class="control-label col-md-1 col-md-offset-5" for="input20">录入人</label>
 										<div class="col-md-2">
-											<input type="text" id="input20" name="inputRealName" class="form-control"/>
+											<input type="text" id="input20" name="inputRealName" class="form-control"
+											data-rule-required="true" data-msg-required="请输入录入人姓名"/>
 										</div>
 										<label class="control-label col-md-1" for="input21">审核人</label>
 										<div class="col-md-2">
-											<input type="text" id="input21" name="reviewerName" class="form-control"/>
+											<input type="text" id="input21" name="reviewerName" class="form-control"
+											data-rule-required="true" data-msg-required="请输入审核人姓名"/>
 										</div>
 									</div>
 								</div>

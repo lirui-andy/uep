@@ -105,3 +105,10 @@ body{
 #eventTable .event-type-2:hover,
 #eventTable .event-type-3:hover,
 #eventTable .event-type-4:hover{color:#f39c12; }
+
+form input.error{
+	border-color: #f56954;
+}
+form label.error{
+	color:#f56954;
+}
