@@ -6,6 +6,8 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class EventVO implements Serializable{
 
 	/**
@@ -31,7 +33,7 @@ public class EventVO implements Serializable{
 	private String name;
 	private String gender;
 	
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone="GMT+8")
 	private Date eventTime;
 	
 	private String idNum;
@@ -42,6 +44,7 @@ public class EventVO implements Serializable{
 	private String inputRealName;
 	
 	private String inputOrgName;
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone="GMT+8")
 	private Date inputTime;
 	private String inputUserName;
 	public MultipartFile[] getFile() {
