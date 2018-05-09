@@ -48,6 +48,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <script th:src="@{/bower_components/bootstrap-daterangepicker/daterangepicker.js}"></script>
 <script th:src="@{/plugins/timepicker/bootstrap-timepicker.min.js}"></script>
 <script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
+<script th:src="@{/bower_components/jquery-validation/dist/jquery.validate.min.js}"></script>
 
 <script th:src="@{/dist/js/const.js}"></script>
 <script th:src="@{/dist/js/uep.js}"></script>
@@ -75,7 +76,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
             <li data-eventType="2"><a href="/list?t=2">落水失踪人员</a></li>
             <li data-eventType="3"><a href="/list?t=3">疑似落水失踪人员</a></li>
             <li data-eventType="4"><a href="/list?t=4">外单位协查</a></li>
-            <li ><a href="javascript:$('#logout').submit();">登出</a><form class="form-inline" th:action="@{/logout}" method="POST" id="logout"></form></li>
+            <li ><a href="javascript:$('#logout').submit();">登出</a></li>
           </ul>
           <!--
           <form class="navbar-form navbar-left" role="search">
@@ -109,6 +110,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
         </div>  
         <div class="pull-right">
             <small th:inline="text">登录单位：[[${#authorization.authentication.principal.orgName}]]</small>
+            <small th:inline="text"> <a th:href="@{/user/changepwd}">修改密码</a></small>
         </div>
         <div class="clearfix"></div>
       </section>
