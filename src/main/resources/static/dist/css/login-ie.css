@@ -1,0 +1,13 @@
+.theme1 {
+	background-image: none !important;
+}
+
+.theme2 {
+	background-image: none !important;
+}
+
+.login-box-body {
+	background-image: none !important;
+	display:none;
+}
+label{margin-bottom:0px !important;}

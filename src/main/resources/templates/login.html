@@ -24,8 +24,8 @@
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-  <script th:src="@{/dist/js/html5shiv.min.js}"></script>
-  <script th:src="@{/dist/js/respond.js}"></script>
+  
+<link rel="stylesheet" th:href="@{/dist/css/login-ie.css}">
   <![endif]-->
 
 <!-- Google Font -->
@@ -36,7 +36,7 @@
 		<div class="login-logo">
 					<p class="login-box-title">宜昌分局长江未知名尸体处置及落水失踪人员信息共享平台</p>
 		</div>
-		<div class="login-box-body">
+		<div class="login-box-body" id="loginbox">
 			<form th:action="@{/login}" method="post" class="form-horizontal">
 				<p>&nbsp;</p>
 				<div class="form-group ">
@@ -63,22 +63,31 @@
 
 
 		</div>
+		<!--[if lt IE 9]>
 				<div class="row" style="text-align:center; margin-top:8px;">
 					<div class="col-md-10 col-md-offset-2" style="text-align:center; margin-top:8px;">
-						<label style="color:#E0E0E0">使用IE浏览器访问此系统可能存在兼容性问题。请使用下方的链接安装相应版本的谷歌浏览器，然后使用谷歌浏览器访问此系统。</label>
+						<label style="color:#E0E0E0">使用低版本的IE浏览器访问此系统会产生不兼容问题。请使用下方的链接安装相应版本的谷歌浏览器，然后使用谷歌浏览器访问此系统。</label>
 					</div>
 				</div>
 				<div class="row" style="text-align:center; margin-top:8px; color:#E0E0E0;">
 					<div class="col-md-10 col-md-offset-2" >
-						<label><i class="fa fa-chrome">下载谷歌浏览器</i></label>
+						<label><i class="fa fa-chrome"></i>下载谷歌浏览器</label>
 						<a th:href="@{/66.0.3359.139_chrome_installer.exe}" style="color:#E0E0E0;"><i class="glyphicon glyphicon-save"></i>Win7/8/Vista/10版本</a>
 						| <a th:href="@{/chrome_xp.exe}" style="color:#E0E0E0;"><i class="glyphicon glyphicon-save"></i>XP版本 </a>
 					</div>
 				</div>
+		<![endif]-->
 		<!-- /.login-box-body -->
 	</div>
 	<!-- /.login-box -->
 
+	<!--[if lt IE 9]>
+	<script type="text/javascript">
+		//document.getElementById("loginbox").style.display="none";
+		//document.body.style.backgroundImage="none";
+	</script>
+  <![endif]-->
+  
 	<!-- jQuery 3 -->
 	<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
 	<!-- Bootstrap 3.3.7 -->
@@ -91,11 +100,6 @@
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
     });
-    var userAgent = navigator.userAgent;
-    var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
-    if(isIE){
-    	
-    }
     
   });
 </script>
