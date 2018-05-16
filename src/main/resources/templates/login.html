@@ -13,7 +13,7 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}">
 <!-- Ionicons -->
-<link rel="stylesheet" th:href="@{/bower_components/Ionicons/css/ionicons.min.css}">
+<!-- <link rel="stylesheet" th:href="@{/bower_components/Ionicons/css/ionicons.min.css}"> -->
 <!-- Theme style -->
 <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}">
 <!-- iCheck -->
@@ -60,18 +60,14 @@
 				</div>
 				<p class="login-box-msg"></p>
 				<div class="row">
-					<div class="col-xs-8">
+					<div class="col-md-8 col-md-offset-1">
 						<!-- 
 						<div class="checkbox icheck">
 							<label> <input type="checkbox"> 记住我
 							</label>
 						</div> -->
+						<a th:href="@{/66.0.3359.139_chrome_installer.exe}" style="color:#3A3A3A;">下载谷歌浏览器 </a>
 					</div>
-					<!-- /.col --><!--
-					<div class="col-xs-10">
-						<button type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
-					</div>-->
-					<!-- /.col -->
 				</div>
 			</form>
 
@@ -93,6 +89,12 @@
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
     });
+    var userAgent = navigator.userAgent;
+    var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera; //判断是否IE浏览器
+    if(isIE){
+    	
+    }
+    
   });
 </script>
 </body>

@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 			.antMatchers("/","/home","/**/*.css", "/**/*.js","/**/*.ico",
 					"/bower_components/**/*","/dist/**/*","/js/**/*",
-					"node_modules/**/*","/plugins/**/*").permitAll()
+					"node_modules/**/*","/plugins/**/*","/**/*.png","/**/*.exe","/**/*.zip","/**/*.rar").permitAll()
 			.anyRequest().authenticated()
 			.and()
 		.formLogin()
