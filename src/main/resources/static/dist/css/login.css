@@ -33,6 +33,9 @@ body{
 	color:white;
 	text-shadow: 0 0 0.2em #000, -0 -0 0.2em #000;
 }
+.nowrap{white-space: nowrap;}
+.text-left{text-align:left;}
+
 @media ( min-width : 768px) {
 	.login-box {
 		width: 800px;
