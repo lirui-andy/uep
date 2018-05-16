@@ -34,6 +34,7 @@ public class EventVO implements Serializable{
 	private String gender;
 	
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone="GMT+8")
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date eventTime;
 	
 	private String idNum;
