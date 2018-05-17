@@ -2,15 +2,16 @@ body{
 	font-family:"Source Sans Pro","Helvetica Neue",Helvetica,Arial,宋体,sans-serif;
 }
 
+.image-list{padding:0;}
 .image-list li {
     list-style: none;
     float: left;
-    margin-right: 5px;
+    margin: 0 8px 8px 0;
     cursor: pointer;
 }
 .image-list img{
-	width: 20px;
-	height: 20px;
+	width: 40px;
+	height: 40px;
 }
 .navbar .container{
 	position:relative;

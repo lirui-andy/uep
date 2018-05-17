@@ -17,9 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
@@ -30,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yichang.uep.dto.CommentVO;
 import com.yichang.uep.dto.CommonOperResult;
@@ -117,18 +116,39 @@ public class EventController extends BaseController{
 		
 		
 		YEvent eventModel = new YEvent();
-		BeanUtils.copyProperties(event, eventModel,"eventId", "inputTime");
-		eventModel.setInputTime(now);
-		eventModel.setInputOrgId(currentUser.getOrgId());
-		eventModel.setInputOrgName(currentUser.getOrgName());
-		eventModel.setInputUserId(currentUser.getUserId());
-		eventModel.setInputUserName(currentUser.getUserName());
+		BeanUtils.copyProperties(event, eventModel,"eventId", 
+				"inputTime","inputOrgId","inputOrgName", "inputUserId", "inputUserName");
+//		eventModel.setInputTime(now);
+//		eventModel.setInputOrgId(currentUser.getOrgId());
+//		eventModel.setInputOrgName(currentUser.getOrgName());
+//		eventModel.setInputUserId(currentUser.getUserId());
+//		eventModel.setInputUserName(currentUser.getUserName());
 		
 		eventModel = eventRepo.save(eventModel);
 		
 		final int eventId = eventModel.getEventId();
 		//file
-		Stream.of(event.getFile())
+		saveAttachment(event.getFile(), eventId);
+		try{
+			//录入单位自动签收
+			eventManage.receiveEvent(currentUser, eventId, currentUser.getRealName());
+		}catch(Exception e){
+			logger.error("录入单位自动签收出错");
+			logger.error(e.getMessage(), e);
+		}
+		
+		//备注属性
+		saveComments(eventId, currentUser, request);
+		
+		return "redirect:/event/"+eventId;
+	}
+	
+
+	private void saveAttachment(MultipartFile[] file, int eventId) {
+		final Date now = new Date();
+		final YUser currentUser = currentUser();
+		
+		Stream.of(file)
 		.filter(f -> (f != null && f.getSize() > 0 ) )
 		.forEach(f -> {
 			try {
@@ -150,25 +170,29 @@ public class EventController extends BaseController{
 				e.printStackTrace();
 			}
 		});
-		
-		try{
-			//录入单位自动签收
-			eventManage.receiveEvent(currentUser, eventId, currentUser.getRealName());
-		}catch(Exception e){
-			logger.error("录入单位自动签收出错");
-			logger.error(e.getMessage(), e);
-		}
-		
-		//备注属性
-		saveComments(eventId, currentUser, request);
-		
-		return "redirect:/event/"+eventId;
 	}
-	
 
 	@PostMapping("/update")
 	public String update(EventVO event, final HttpServletRequest request){
+		final Date now = new Date();
 		final YUser currentUser = currentUser();
+		
+		Optional<YEvent> eventOpt = eventRepo.findById(event.getEventId());
+		if(eventOpt.isPresent()){
+
+			//更新事件表
+			YEvent eventModel = eventOpt.get();
+			BeanUtils.copyProperties(event, eventModel,"eventId", 
+					"inputTime","inputOrgId","inputOrgName", "inputUserId", "inputUserName","inputRealName", "reviewerName");
+
+			//备份事件记录
+			//更新事件
+			eventModel = eventRepo.save(eventModel);
+
+			//file
+			saveAttachment(event.getFile(), event.getEventId());
+		}
+		
 		//备注属性
 		saveComments(event.getEventId(), currentUser, request);
 		
@@ -198,12 +222,14 @@ public class EventController extends BaseController{
 			return "404";
 		}
 		
-		YEventReceipt rcpt = eventReceiptRepo.findTop1ByEventIdAndOrgId(eventId, currentUser().getOrgId());
-		boolean signed = rcpt != null;
+		boolean isAuthor = currentUser().getOrgId() == event.get().getInputOrgId();
+
+		YEventReceipt rcpt = isAuthor ? null : eventReceiptRepo.findTop1ByEventIdAndOrgId(eventId, currentUser().getOrgId());
+		boolean signed = isAuthor || (rcpt != null);
 		if(!signed){
 			model.addAttribute("eventId", eventId);
 			model.addAttribute("needSign", true);
-			model.addAttribute("editable", false);
+			model.addAttribute("isAuthor", false);
 			model.addAttribute("showSaveBtn", false);
 		}else{
 			if(event.isPresent()){
@@ -224,23 +250,16 @@ public class EventController extends BaseController{
 				model.addAttribute("comments", comments);
 				
 				//当前是否可编辑（登陆人与录入人是同一个单位）
-				model.addAttribute("editable", currentUser().getOrgId() == event.get().getInputOrgId());
+				model.addAttribute("isAuthor", isAuthor);
 				
-				boolean showSaveBtn = currentUser().getOrgId() == event.get().getInputOrgId();
-				showSaveBtn = showSaveBtn | hasAuthority("ROLE_110") | hasAuthority("ROLE_XZD");
+				boolean showSaveBtn = isAuthor || hasAuthority("ROLE_110") || hasAuthority("ROLE_XZD");
 				model.addAttribute("showSaveBtn",showSaveBtn);
 			}
 		}
-		return "view";
+		//刑侦队可以修改所有内容
+		return hasAuthority("ROLE_XZD") ? "update": "view";
 	}
 	
-	private boolean hasAuthority(String auth){
-		return SecurityContextHolder.getContext().getAuthentication()
-		.getAuthorities().stream()
-		.filter(f -> f.getAuthority().equalsIgnoreCase(auth))
-		.toArray().length > 0
-		;
-	}
 	
 	@GetMapping(path="/attach/{uuid}")
 	public void viewAttach(@PathVariable("uuid") String uuid, HttpServletResponse response) throws IOException{

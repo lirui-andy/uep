@@ -9,9 +9,10 @@
 <script th:src="@{/bower_components/viewerjs/dist/viewer.js}"></script><!-- Viewer.js is required -->
 <link  th:href="@{/bower_components/viewerjs/dist/viewer.css}" rel="stylesheet">
 <script th:src="@{/bower_components/jquery-viewer/dist/jquery-viewer.js}"></script>
+<script th:src="@{/bower_components/jquery-validation/dist/jquery.validate.min.js}"></script>
+<script th:src="@{/dist/js/eventEdit.js}"></script>
 
 	<div th:replace="sign"></div>
-
 	<div class="wrapper">
 
 		<header th:replace="layout::mainHeader"> </header>
@@ -29,25 +30,19 @@
 						</div>
 						<!-- /.box-header -->
 						<div class="box-body">
-						<form class="form" th:action="@{/event/update}" method="POST">
+						<form class="form" th:action="@{/event/update}"  method="POST" enctype="multipart/form-data" id="eventEditForm">
 							<input type="hidden" name="eventId" th:value="${event?.eventId}"/>
 							<div class="box-body">
 								<div class="form-horizontal">
 									<div class="form-group">
 										<label for="input1" class="col-md-2 control-label">类别</label>
 										<div class="col-md-4" >
-											<span id="input1" th:text="${event?.eventType}" class="form-control"
-											data-const data-constgroup="EVENT_TYPE" 
-											th:attr="data-constval=${event?.eventType}" ></span>
+											<select id="input1" name="eventType" th:attr="data-constval=${event?.eventType}" data-constGroup="EVENT_TYPE" class="form-control no-padding">
+											</select>
 										</div>
 	
 										<label for="input2" class="col-md-1 control-label">是否查清</label>
-										<div class="col-md-4" th:unless="${isAuthor}">
-											<span id="input2" data-const th:data-constVal="${comments?.get('EVENT_CHECKED_CLEAR')}" 
-												data-constGroup="EVENT_CHECKED_CLEAR"  class="form-control">
-											</span>
-										</div>
-										<div class="col-md-4" th:if="${isAuthor}" >
+										<div class="col-md-4" >
 											<input type="hidden" name="commentKey" value="EVENT_CHECKED_CLEAR">
 											<select id="input2" th:data-constVal="${comments?.get('EVENT_CHECKED_CLEAR')}" name="commentVal_EVENT_CHECKED_CLEAR" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
 											</select>
@@ -56,57 +51,60 @@
 									<div class="form-group">
 										<label for="input3" class="col-md-2 control-label">接警单位</label>
 										<div class="col-md-4">
-											<span id="input3" th:text="${event?.rcvOrgName}" class="form-control"></span>
+											<input type="text" name="rcvOrgName" id="input3" th:value="${event?.rcvOrgName}" class="form-control"
+											data-rule-required="true" data-msg-required="请输入接警单位">
 										</div>
 										<label for="input4" class="col-md-1 control-label">处警民警</label>
 										<div class="col-md-4">
-											<span  id="input4" th:text="${event?.handlerName}"  class="form-control"/>
+											<input type="text" name="handlerName" id="input4" th:value="${event?.handlerName}"  class="form-control"
+											data-rule-required="true" data-msg-required="请输入处警民警">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input5" class="col-md-2 control-label">报警人</label>
 										<div class="col-md-4">
-											<span  id="input5" th:text="${event?.reportorName}" class="form-control"/>
+											<input type="text" name="reportorName" id="input5" th:value="${event?.reportorName}" class="form-control"/>
 										</div>
 										<label for="input6" class="col-md-1 control-label">报警电话</label>
 										<div class="col-md-4">
-											<span  id="input6" th:text="${event?.reportorTel}" class="form-control"/>
+											<input type="text" name="reportorTel" id="input6" th:value="${event?.reportorTel}" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input7" class="col-md-2 control-label">协查单位</label>
 										<div class="col-md-4">
-											<span id="input7" th:text="${event?.coOrgName}" class="form-control"></span>
+											<input type="text" name="coOrgName" id="input7" th:value="${event?.coOrgName}" class="form-control"></span>
 										</div>
 										
 										<label for="input8" class="col-md-1 control-label">联系人</label>
 										<div class="col-md-2">
-											<span id="input8" th:text="${event?.coOrgContact}" class="form-control"/>
+											<input type="text" name="coOrgContact" id="input8" th:value="${event?.coOrgContact}" class="form-control"/>
 										</div>
 										<label for="input9" class="col-md-1 control-label">电话</label>
 										<div class="col-md-2">
-											<span id="input9" th:text="${event?.coOrgTel}" class="form-control"/>
+											<input type="text" name="coOrgTel" id="input9" th:value="${event?.coOrgTel}" class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input10" class="col-md-2 control-label">姓名</label>
 										<div class="col-md-4">
-											<span id="input10" th:text="${event?.name}" class="form-control"/>
+											<input type="text" name="name" id="input10" th:value="${event?.name}" class="form-control"/>
 										</div>
 										
 										<label for="gender" class="col-md-1 control-label">性别</label>
 										<div class="col-md-2 ">
-											<span id="gender" th:data-constval="${event?.gender}" data-constGroup="GENDER" data-const class="form-control"/>
+											<select name="gender" id="gender" th:data-constval="${event?.gender}" data-constGroup="GENDER" data-const class="form-control">
+											</select>
 										</div>
 										<label for="input12" class="col-md-1 control-label">事件时间</label>
 										<div class="col-md-2">
-											<span id="input12" th:text="${#dates.format(event?.eventTime, 'yyyy-MM-dd HH:mm')}" class="form-control"/>
+											<input type="text" name="eventTime" id="input12" th:value="${#dates.format(event?.eventTime, 'yyyy-MM-dd HH:mm')}"  data-datepicker class="form-control"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input13" class="col-md-2 control-label">身份证号</label>
 										<div class="col-md-4">
-											<span id="input13" th:text="${event?.idNum}" class="form-control"/>
+											<input type="text" name="idNum" id="input13" th:value="${event?.idNum}" class="form-control"/>
 										</div>
 										<label for="input14" class="col-md-1 control-label">图片</label>
 										<div class="col-md-4 form-control-static">
@@ -117,6 +115,10 @@
 										  <ul id="images" class="image-list">
 										    <li th:each="att:${attachs}"><img th:src="@{/event/attach/{u}(u=${att.attUri})}" th:alt="${att.fileName}"></li>
 										  </ul>
+										  <div>
+										  	<input type='file' name='file'>
+											<a href="javascript: " onclick="insertAttach(this);" class=" btn btn-flat btn-info btn-xs">添加</a>
+										  </div>
 										</div>
 									</div>									
 								</div>
@@ -124,11 +126,11 @@
 									<div class="form col-md-11 col-md-offset-1">
 										<div class="form-group">
 											<label for="input15" class="control-label">简要警情:</label>
-												<textarea th:text="${event?.briefInfo}" readonly id="input15" name="briefInfo" class="form-control" rows="3"></textarea>
+												<textarea th:text="${event?.briefInfo}" id="input15" name="briefInfo" class="form-control" rows="3"></textarea>
 										</div>	
 										<div class="form-group">
 											<label for="input16" class="control-label">人员情况:</label>
-												<textarea th:text="${event?.detailInfo}" readonly id="input16" name="detailInfo" class="form-control" rows="3"></textarea>
+												<textarea th:text="${event?.detailInfo}" id="input16" name="detailInfo" class="form-control" rows="3"></textarea>
 										</div>
 										<!-- 110备注 : 具备110权限时，可改-->
 										<div class="form-group">
@@ -156,12 +158,14 @@
 								<div class="form-horizontal">
 									<div class="form-group">
 										<label class="control-label col-md-1 col-md-offset-5" for="input20">录入人</label>
-										<div class="col-md-2 form-control-static">
-											<span id="input20" th:text="${event?.inputRealName}"/>
+										<div class="col-md-2">
+											<input type="text" id="input20" name="inputRealName" th:value="${event?.inputRealName}" class="form-control"
+											data-rule-required="true" data-msg-required="请输入录入人姓名"/>
 										</div>
 										<label class="control-label col-md-1" for="input21">审核人</label>
-										<div class="col-md-2 form-control-static">
-											<span id="input21" th:text="${event?.reviewerName}"/>
+										<div class="col-md-2">
+											<input type="text" id="input21" name="reviewerName" th:value="${event?.reviewerName}" class="form-control"
+											data-rule-required="true" data-msg-required="请输入审核人姓名"/>
 										</div>
 									</div>
 								</div>

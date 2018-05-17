@@ -10,4 +10,12 @@ public class BaseController {
 		UepUser user = (UepUser)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return user;
 	}
+	
+	protected boolean hasAuthority(String auth){
+		return SecurityContextHolder.getContext().getAuthentication()
+		.getAuthorities().stream()
+		.filter(f -> f.getAuthority().equalsIgnoreCase(auth))
+		.toArray().length > 0
+		;
+	}
 }
