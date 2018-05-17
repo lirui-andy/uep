@@ -40,10 +40,12 @@ import com.yichang.uep.dto.datatables.RequestAdapter;
 import com.yichang.uep.model.YAttachment;
 import com.yichang.uep.model.YEvent;
 import com.yichang.uep.model.YEventComment;
+import com.yichang.uep.model.YEventHis;
 import com.yichang.uep.model.YEventReceipt;
 import com.yichang.uep.model.YUser;
 import com.yichang.uep.repo.AttachmentRepo;
 import com.yichang.uep.repo.EventCommentRepo;
+import com.yichang.uep.repo.EventHisRepo;
 import com.yichang.uep.repo.EventReceiptRepo;
 import com.yichang.uep.repo.EventRepo;
 import com.yichang.uep.service.CommentManage;
@@ -57,6 +59,8 @@ public class EventController extends BaseController{
 	Logger logger = LoggerFactory.getLogger(EventController.class);
 	@Autowired
 	EventRepo eventRepo;
+	@Autowired
+	EventHisRepo eventHisRepo;
 	@Autowired
 	EventReceiptRepo eventReceiptRepo;
 	@Autowired
@@ -182,11 +186,24 @@ public class EventController extends BaseController{
 
 			//更新事件表
 			YEvent eventModel = eventOpt.get();
-			BeanUtils.copyProperties(event, eventModel,"eventId", 
-					"inputTime","inputOrgId","inputOrgName", "inputUserId", "inputUserName","inputRealName", "reviewerName");
 
 			//备份事件记录
+			YEventHis his = new YEventHis();
+			BeanUtils.copyProperties(eventModel, his);
+			eventHisRepo.save(his);
+			
 			//更新事件
+			BeanUtils.copyProperties(event, eventModel,"eventId", 
+					"inputTime","inputOrgId","inputOrgName", 
+					"inputUserId", "inputUserName","inputRealName", 
+					"reviewerName");
+			eventModel.setUpdateOrgId(currentUser.getOrgId());
+			eventModel.setUpdateOrgName(currentUser.getOrgName());
+			eventModel.setUpdateUserId(currentUser.getUserId());
+			eventModel.setUpdateUserName(currentUser.getUserName());
+			eventModel.setUpdateTime(now);
+			eventModel.setUpdateRealName(event.getUpdateRealName());
+			eventModel.setUpdateReviewerName(event.getUpdateReviewerName());
 			eventModel = eventRepo.save(eventModel);
 
 			//file

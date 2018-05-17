@@ -48,6 +48,11 @@ public class EventVO implements Serializable{
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm", timezone="GMT+8")
 	private Date inputTime;
 	private String inputUserName;
+	
+
+	private String updateReviewerName;
+	private String updateRealName;
+	
 	public MultipartFile[] getFile() {
 		return file;
 	}
@@ -185,6 +190,18 @@ public class EventVO implements Serializable{
 	}
 	public void setEventTime(Date eventTime) {
 		this.eventTime = eventTime;
+	}
+	public String getUpdateReviewerName() {
+		return updateReviewerName;
+	}
+	public void setUpdateReviewerName(String updateReviewerName) {
+		this.updateReviewerName = updateReviewerName;
+	}
+	public String getUpdateRealName() {
+		return updateRealName;
+	}
+	public void setUpdateRealName(String updateRealName) {
+		this.updateRealName = updateRealName;
 	}
 
 }

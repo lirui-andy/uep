@@ -2,7 +2,6 @@ package com.yichang.uep.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,26 +9,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 /**
- * The persistent class for the y_event database table.
+ * The persistent class for the y_event_his database table.
  * 
  */
 @Entity
-@Table(name="y_event")
-@NamedQuery(name="YEvent.findAll", query="SELECT y FROM YEvent y")
-public class YEvent implements Serializable {
+@Table(name="y_event_his")
+@NamedQuery(name="YEventHis.findAll", query="SELECT y FROM YEventHis y")
+public class YEventHis implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="rec_id")
+	private int recId;
+	
 	@Column(name="event_id")
 	private int eventId;
 
@@ -124,8 +123,19 @@ public class YEvent implements Serializable {
 	private String updateReviewerName;
 
 	
-	public YEvent() {
+	public YEventHis() {
 	}
+
+	
+	public int getRecId() {
+		return recId;
+	}
+
+
+	public void setRecId(int recId) {
+		this.recId = recId;
+	}
+
 
 	public int getEventId() {
 		return this.eventId;
