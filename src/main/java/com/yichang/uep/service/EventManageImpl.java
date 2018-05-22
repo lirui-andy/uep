@@ -3,7 +3,6 @@ package com.yichang.uep.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -57,6 +56,16 @@ public class EventManageImpl implements EventManage {
 	private List<Predicate> commenSepc(final EventQueryVO event, Root<YEvent> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<>();
 		if(event == null) return predicates;
+		//删除标记
+		if(StringUtils.isBlank(event.getActiveFlag())
+				||StringUtils.equals("1", event.getActiveFlag())){
+			//未指定，或activeFlag==1: 查询未删除的记录
+			predicates.add(cb.equal(root.get("active"), Boolean.TRUE));
+		} else if(StringUtils.equals("0", event.getActiveFlag())){
+			//activeFlag==0:查询已删除记录
+			predicates.add(cb.equal(root.get("active"), Boolean.FALSE));
+		}//其它情况：删除所有记录
+		
 		//事件类别 
 		if( !StringUtils.isBlank( event.getEventType()))
 			predicates.add(root.get("eventType").in(event.getEventType()));

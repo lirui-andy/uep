@@ -114,16 +114,18 @@ function _loadNewMessageCount(){
 }
 
 $(function(){
-	_guessPageFromLocation();
-	_showPageTitle();
-	_loadNewMessageCount();
-	
-	$(".navbar-nav li").each(function(i, e){
-		if($(e).attr("data-eventType")== currentMenu){
-			$(e).addClass("active");
-		}
-		else $(e).removeClass("active");
-	});
-	
-	queryEvent();
+	if(location.href.indexOf("/list") > -1 ){
+		_guessPageFromLocation();
+		_showPageTitle();
+		_loadNewMessageCount();
+		
+		$(".navbar-nav li").each(function(i, e){
+			if($(e).attr("data-eventType")== currentMenu){
+				$(e).addClass("active");
+			}
+			else $(e).removeClass("active");
+		});
+		
+		queryEvent();
+	}
 });

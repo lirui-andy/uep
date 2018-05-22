@@ -23,7 +23,7 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/list").setViewName("list");
         registry.addViewController("/edit").setViewName("edit");
         registry.addViewController("/view").setViewName("view");
-        registry.addViewController("/hello").setViewName("hello");
+        registry.addViewController("/event-manage").setViewName("event-manage");
 	}
 
 	//Enable Spring Security taglibs in Thymeleaf

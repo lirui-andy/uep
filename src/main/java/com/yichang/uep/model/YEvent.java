@@ -122,6 +122,9 @@ public class YEvent implements Serializable {
 
 	@Column(name="update_reviewer_name")
 	private String updateReviewerName;
+	
+	@Column(name="active")
+	private Boolean active;
 
 	
 	public YEvent() {
@@ -365,6 +368,14 @@ public class YEvent implements Serializable {
 
 	public void setUpdateReviewerName(String updateReviewerName) {
 		this.updateReviewerName = updateReviewerName;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 

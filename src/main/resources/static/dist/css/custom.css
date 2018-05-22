@@ -93,20 +93,23 @@ body{
 .newmessage .newflag{
 }
 
-#eventTable td{white-space:nowrap;}
-#eventTable .event-type-1,
-#eventTable .event-type-2,
-#eventTable .event-type-3,
-#eventTable .event-type-4{ color:black; cursor:pointer;}
-#eventTable .event-type-1{background-color:#e8fbf9;}
-#eventTable .event-type-2{background-color:#fbfdeb;}
-#eventTable .event-type-3{background-color:#e8fbe8;}
-#eventTable .event-type-4{background-color:#f6edf7;}
-#eventTable .event-type-1:hover,
-#eventTable .event-type-2:hover,
-#eventTable .event-type-3:hover,
-#eventTable .event-type-4:hover{color:#f39c12; }
-
+ .table td{white-space:nowrap;}
+ .event-type-1,
+ .event-type-2,
+ .event-type-3,
+ .event-type-4{ color:black; cursor:pointer;}
+ .event-type-1{background-color:#e8fbf9;}
+ .event-type-2{background-color:#fbfdeb;}
+ .event-type-3{background-color:#e8fbe8;}
+ .event-type-4{background-color:#f6edf7;}
+ .event-type-1:hover,
+ .event-type-2:hover,
+ .event-type-3:hover,
+ .event-type-4:hover{color:#f39c12; }
+	.event-inactive{
+	color:red;
+	text-decoration:line-through;
+	}
 form input.error{
 	border-color: #f56954;
 }

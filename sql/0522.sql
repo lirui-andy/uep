@@ -13,7 +13,8 @@ alter table y_event add (
   `update_org_id` int(11) DEFAULT NULL COMMENT '修改人单位id',
   `update_org_name` varchar(200) DEFAULT NULL COMMENT '修改人单位名称',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
-  `update_reviewer_name` varchar(100) DEFAULT NULL COMMENT '修改审核人'
+  `update_reviewer_name` varchar(100) DEFAULT NULL COMMENT '修改审核人',
+  `active` TINYINT DEFAULT 1 NOT NULL COMMENT '是否活动数据 1-活动数据 0-已删除' 
   )
 ;
 CREATE TABLE `y_event_his` (
@@ -48,5 +49,6 @@ CREATE TABLE `y_event_his` (
   `update_org_name` varchar(200) DEFAULT NULL COMMENT '修改人单位名称',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `update_reviewer_name` varchar(100) DEFAULT NULL COMMENT '修改审核人',
+  `active` TINYINT DEFAULT 1 NOT NULL COMMENT '是否活动数据 1-活动数据 0-已删除',
   PRIMARY KEY (`rec_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='事件表';

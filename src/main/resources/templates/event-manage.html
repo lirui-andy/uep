@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout::head">
+</head>
+<!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+<body class="hold-transition skin-blue layout-top-nav theme2">
+	<div class="wrapper">
+
+		<header th:replace="layout::mainHeader"> </header>
+		<!-- Full Width Column -->
+		<div class="content-wrapper">
+			<div class="container">
+				<!-- Content Header (Page header) -->
+				<section th:replace="layout::contentHeader"></section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="box box-info">
+						<div class="box-header with-border">
+							<h5 class="box-title list-title">数据管理</h5>
+							<a class="btn btn-flat btn-xs btn-info pull-right" th:href="@{/edit}">信息录入</a>
+						</div>
+						<!-- /.box-header -->
+						<div class="box-body">
+							<form class="form-horizontal" id="eventQueryForm">
+								<div class="form-group">
+									<label for="inputEmail3" class="col-md-2 control-label">姓名</label>
+									<div class="col-md-2">
+										<input type="text" name="name" class="form-control" id="inputEmail3" placeholder="">
+									</div>
+
+									<label for="gender" class="col-md-1 control-label">性别</label>
+									<div class="col-md-2">
+										<select id="gender" name="gender" data-constGroup="GENDER" class="form-control no-padding">
+										<option value="">不限</option>
+										</select>
+									</div>
+									
+									<label for="idnum" class="col-md-2 col-lg-1 control-label">身份证号</label>
+									<div class="col-md-3">
+										<input type="text" name="idNum" class="form-control" id="idnum" placeholder="">
+									</div>
+
+
+								</div>
+								<div class="form-group">
+									<label for="eventTime" class="col-md-2 control-label">事件时间</label>
+									<div class="col-md-5 ">
+										<div class="input-group">
+										<input type="text" name="timeRange" class="form-control" id="timeRange" data-default="" data-daterangepicker placeholder="">
+										<div class="input-group-addon" onclick="javascript:$('#timeRange').val('');">
+					                      <a class="fa fa-trash-o" href="javascript:" data-toggle="tooltip" data-original-title="点击清除输入的日期"></a>
+					                    </div>
+					                    </div>
+									</div>
+									<label for="checkedClear" class="col-md-2 col-lg-1 control-label">是否查清</label>
+									<div class="col-md-3">
+										<select id="checkedClear" name="checkedClear" data-constGroup="EVENT_CHECKED_CLEAR" class="form-control no-padding">
+										<option value="">不限</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="inputKeyword">关键字<i class="fa fa-question-circle text-blue" data-toggle="tooltip" data-original-title="多个关键字之间用逗号隔开，最多只接受3个关键字。如果超过3个，只取前3个。"></i></label>
+									<div class="col-md-5 ">
+										<div class="input-group">
+										<input type="text" name="keyword" class="form-control" id="inputKeyword" 
+										placeholder="多个关键字之间用逗号分隔">
+										<div class="input-group-addon" onclick="javascript:$('#inputKeyword').val('');">
+					                      <a class="fa fa-trash-o" href="javascript:" data-toggle="tooltip" data-original-title="点击清除关键字"></a>
+					                    </div>
+					                    </div>
+										
+									</div>
+									<label for="activeFlag" class="col-md-1 control-label">删除状态</label>
+									<div class="col-md-2">
+										<select id="activeFlag" name="activeFlag" class="form-control no-padding">
+										<option value="A">全部</option>
+										<option value="1">未删除</option>
+										<option value="0">已删除</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-md-2 control-label" for="eventType">事件类型</label>
+									<div class="col-md-5 ">
+										<select id="eventType" name="eventType" data-constGroup="EVENT_TYPE" class="form-control no-padding">
+										<option value="">不限</option>
+										</select>
+									</div>
+									<div class="col-md-2">
+										<button type="button" id="manage-query-btn" class="btn btn-default">查询</button>
+										<button type="button" id="manage-delete-btn" class="btn btn-default">删除</button>
+										
+									</div>
+								</div>
+							</form>
+
+							<div class="table-responsive no-padding">
+								<table class="table table-hover table-bordered" id="eventManageTable">
+									
+									<thead>
+										<tr class="bg-aqua">
+											<th> </th>
+											<th style="height:2.2em;">类别</th>
+											<th>姓名</th>
+											<th>性别</th>
+											<th>身份证号</th>
+											<th>事件时间</th>
+											<th>录入时间</th>
+											<th>录入民警</th>
+											<th>录入单位</th>
+										</tr>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="box-footer clearfix">
+						</div>
+					</div>
+					<!-- /.box -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.container -->
+		</div>
+		<!-- /.content-wrapper -->
+		<footer class="main-footer" th:replace="layout::footer"> </footer>
+	</div>
+	<!-- ./wrapper -->
+	<script type="text/javascript">
+</script>
+</body>
+</html>

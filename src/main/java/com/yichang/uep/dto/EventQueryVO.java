@@ -8,6 +8,7 @@ public class EventQueryVO {
 	private String timeRange;
 	private String keyword;
 	private String checkedClear;
+	private String activeFlag; //"1"-未删除 "0"-已删除 "A"-全部
 	
 	public String getEventType() {
 		return eventType;
@@ -51,4 +52,11 @@ public class EventQueryVO {
 	public void setCheckedClear(String checkedClear) {
 		this.checkedClear = checkedClear;
 	}
+	public String getActiveFlag() {
+		return activeFlag;
+	}
+	public void setActiveFlag(String activeFlag) {
+		this.activeFlag = activeFlag;
+	}
+
 }
