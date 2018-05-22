@@ -3,7 +3,10 @@ INSERT INTO y_role (role_name,comment)
 VALUES ('ROLE_110','110角色') ;
 INSERT INTO y_role (role_name,comment)
 VALUES ('ROLE_XZD','刑侦队角色') ;
+INSERT INTO y_role (role_name,comment)
+VALUES ('ROLE_EVENT_MAN','事件数据管理员角色') ;
 
+INSERT INTO y_user_perm (user_name,permcode) VALUES ('xzzd','ROLE_EVENT_MAN') ;
 delete from y_user_perm where user_name = 'xzzd' and permcode='ROLE_110';
 
 alter table y_event add (

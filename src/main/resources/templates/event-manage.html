@@ -21,8 +21,11 @@
 							<a class="btn btn-flat btn-xs btn-info pull-right" th:href="@{/edit}">信息录入</a>
 						</div>
 						<!-- /.box-header -->
-						<div class="box-body">
-							<form class="form-horizontal" id="eventQueryForm">
+						<div class="box-body" th:unless="${#authorization.expression('hasRole(''ROLE_EVENT_MAN'')')}">
+							您没有数据管理权限。
+						</div>
+						<div class="box-body" th:if="${#authorization.expression('hasRole(''ROLE_EVENT_MAN'')')}">
+							<form class="form-horizontal" id="eventQueryForm" >
 								<div class="form-group">
 									<label for="inputEmail3" class="col-md-2 control-label">姓名</label>
 									<div class="col-md-2">
