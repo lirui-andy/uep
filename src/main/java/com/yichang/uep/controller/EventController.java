@@ -204,8 +204,8 @@ public class EventController extends BaseController{
 			eventModel.setUpdateUserName(currentUser.getUserName());
 			eventModel.setUpdateTime(now);
 			
-			eventModel.setUpdateRealName(event.getUpdateRealName());
-			eventModel.setUpdateReviewerName(event.getUpdateReviewerName());
+			eventModel.setUpdateRealName(currentUser.getRealName());
+//			eventModel.setUpdateReviewerName(event.getUpdateReviewerName());
 			eventModel.setActive(Boolean.TRUE);
 			eventModel = eventRepo.save(eventModel);
 
