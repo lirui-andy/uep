@@ -59,7 +59,7 @@ function queryEvent(){
 				$(row)
 					.addClass("disabled event-type-"+data.eventType)
 					.on("click", function(){
-			  		window.open("/event/"+data.eventId);
+			  		window.open("/event/"+data.eventId, "eventdetail");
 			  	});
 			},
 			'columns':[

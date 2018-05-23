@@ -122,12 +122,12 @@ public class EventController extends BaseController{
 		YEvent eventModel = new YEvent();
 		BeanUtils.copyProperties(event, eventModel,"eventId", 
 				"inputTime","inputOrgId","inputOrgName", "inputUserId", "inputUserName");
-//		eventModel.setInputTime(now);
-//		eventModel.setInputOrgId(currentUser.getOrgId());
-//		eventModel.setInputOrgName(currentUser.getOrgName());
-//		eventModel.setInputUserId(currentUser.getUserId());
-//		eventModel.setInputUserName(currentUser.getUserName());
-		
+		eventModel.setInputTime(now);
+		eventModel.setInputOrgId(currentUser.getOrgId());
+		eventModel.setInputOrgName(currentUser.getOrgName());
+		eventModel.setInputUserId(currentUser.getUserId());
+		eventModel.setInputUserName(currentUser.getUserName());
+		eventModel.setActive(Boolean.TRUE);
 		eventModel = eventRepo.save(eventModel);
 		
 		final int eventId = eventModel.getEventId();
@@ -151,7 +151,7 @@ public class EventController extends BaseController{
 	private void saveAttachment(MultipartFile[] file, int eventId) {
 		final Date now = new Date();
 		final YUser currentUser = currentUser();
-		
+		if(file == null ) return;
 		Stream.of(file)
 		.filter(f -> (f != null && f.getSize() > 0 ) )
 		.forEach(f -> {
@@ -182,7 +182,8 @@ public class EventController extends BaseController{
 		final YUser currentUser = currentUser();
 		
 		Optional<YEvent> eventOpt = eventRepo.findById(event.getEventId());
-		if(eventOpt.isPresent()){
+		if(eventOpt.isPresent() && hasAuthority("ROLE_XZD") 
+				&& !StringUtils.isBlank(event.getEventType()) ){
 
 			//更新事件表
 			YEvent eventModel = eventOpt.get();
@@ -202,8 +203,10 @@ public class EventController extends BaseController{
 			eventModel.setUpdateUserId(currentUser.getUserId());
 			eventModel.setUpdateUserName(currentUser.getUserName());
 			eventModel.setUpdateTime(now);
+			
 			eventModel.setUpdateRealName(event.getUpdateRealName());
 			eventModel.setUpdateReviewerName(event.getUpdateReviewerName());
+			eventModel.setActive(Boolean.TRUE);
 			eventModel = eventRepo.save(eventModel);
 
 			//file
