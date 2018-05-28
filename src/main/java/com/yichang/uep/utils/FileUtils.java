@@ -9,12 +9,14 @@ import java.io.OutputStream;
 import java.util.UUID;
 
 import org.springframework.boot.system.ApplicationHome;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.util.StreamUtils;
 
 public class FileUtils {
 	
 	public final static File home = new ApplicationHome(FileUtils.class).getDir();
 	
+	final static String[] images = "PNG|JPG|JPEG|GIF|BMP".split("\\|");
 //	static File dir = new File("c:/uep/upload");
 	static File dir = new File(home, "upload");
 	public synchronized static String genId(){
@@ -48,5 +50,14 @@ public class FileUtils {
 			return originalFilename.substring(pos+1);
 		}
 		return null;
+	}
+	
+	public static boolean isImage(String fileType){
+		fileType = (fileType == null ? "" : fileType.toUpperCase());
+		for(String t : images){
+			if(fileType.endsWith(t))
+				return true;
+		}
+		return false;
 	}
 }

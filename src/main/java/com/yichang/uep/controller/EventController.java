@@ -3,6 +3,8 @@ package com.yichang.uep.controller;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -260,7 +262,13 @@ public class EventController extends BaseController{
 				model.addAttribute("receipts", receipts);
 				//附件列表
 				List<YAttachment> attachs = attachmentRepo.findByEventIdOrderByAttIdDesc(eventId);
-				model.addAttribute("attachs", attachs);
+				YAttachment[] attachesArr = attachs.toArray(new YAttachment[]{});
+				Object[] images = Stream.of(attachesArr)
+						.filter( t -> FileUtils.isImage(t.getFileType()) ).toArray();
+				Object[] files = Stream.of(attachesArr)
+						.filter( t -> !FileUtils.isImage(t.getFileType()) ).toArray();
+				model.addAttribute("images", images);
+				model.addAttribute("files", files);
 				//备注信息
 				List<YEventComment> commentlist = eventCommentRepo.findLatestByEventId(eventId);
 				final Map<String, String> comments = new HashMap<>();
@@ -287,7 +295,14 @@ public class EventController extends BaseController{
 		if(att.isPresent()){
 			String fileType = att.get().getFileType();
 			try(InputStream in = FileUtils.readFile(uuid)){
-				response.setContentType("image/"+fileType);
+
+		        response.setHeader("content-disposition", "attachment;filename="  
+		                + URLEncoder.encode(att.get().getFileName(), "UTF-8"));
+		        response.setContentLength(att.get().getFileSize().intValue());
+		        if(FileUtils.isImage(fileType))
+		        	response.setContentType("image/"+fileType);
+		        else
+		        	response.setContentType("application/octet-stream");
 				response.setHeader("Cache-Control", "public, max-age=86400");
 				response.setHeader("Pragma", "");
 				response.setHeader("Expires", "86400");

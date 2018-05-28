@@ -108,17 +108,24 @@
 										<div class="col-md-4">
 											<span id="input13" th:text="${event?.idNum}" class="form-control"/>
 										</div>
-										<label for="input14" class="col-md-1 control-label">图片</label>
-										<div class="col-md-4 form-control-static">
-										<!--[if lt IE 7]> 
-											<a style="margin-right:1rem;" th:each="att:${attachs}" 
-												th:href="@{/event/attach/{u}(u=${att.attUri})}" target="_blank" th:text="${att.fileName}"></a>
-												<![endif]-->
+									</div>
+									<div class="form-group">
+										<label for="input14" class="col-md-2 control-label">图片</label>
+										<div class="col-md-9 form-control-static">
 										  <ul id="images" class="image-list">
-										    <li th:each="att:${attachs}"><img th:src="@{/event/attach/{u}(u=${att.attUri})}" th:alt="${att.fileName}"></li>
+										    <li th:each="att:${images}"><img th:src="@{/event/attach/{u}(u=${att.attUri})}" th:alt="${att.fileName}">
+										    <span th:text="${att.fileName}"></span></li>
 										  </ul>
 										</div>
-									</div>									
+									</div>		
+									<div class="form-group">
+										<label for="input14-1" class="col-md-2 control-label">附件</label>
+										<div class="col-md-9 form-control-static">
+										  <ul id="files" class="image-list">
+										    <li th:each="att:${files}"><a th:href="@{/event/attach/{u}(u=${att.attUri})}" th:title="${'点击下载附件 '+att.fileName}" th:text="${att.fileName}"></a></li>
+										  </ul>
+										</div>
+									</div>								
 								</div>
 								<div class="row">
 									<div class="form col-md-11 col-md-offset-1">
