@@ -111,7 +111,8 @@
 										<label for="input14" class="col-md-2 control-label">图片</label>
 										<div class="col-md-9 form-control-static">
 										  <ul id="images" class="image-list">
-										    <li th:each="att:${images}"><img th:src="@{/event/attach/{u}(u=${att.attUri})}" th:alt="${att.fileName}"></li>
+										    <li th:each="att:${images}"><img th:src="@{/event/attach/{u}(u=${att.attUri})}" th:alt="${att.fileName}">
+										    <span th:text="${att.fileName}"></span></li>
 										  </ul>
 										  <div>
 										  	<input type='file' name='file'>
