@@ -8,6 +8,7 @@ VALUES ('ROLE_EVENT_MAN','事件数据管理员角色') ;
 
 INSERT INTO y_user_perm (user_name,permcode) VALUES ('xzzd','ROLE_EVENT_MAN') ;
 delete from y_user_perm where user_name = 'xzzd' and permcode='ROLE_110';
+delete from y_user_perm where user_name = 'ycfj' and permcode='ROLE_XZD';
 
 alter table y_event add (
   `update_user_id` int(11) DEFAULT NULL COMMENT '修改人ID',

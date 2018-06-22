@@ -55,7 +55,10 @@ public class EventManageImpl implements EventManage {
 	//组装查询条件数组
 	private List<Predicate> commenSepc(final EventQueryVO event, Root<YEvent> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		List<Predicate> predicates = new ArrayList<>();
-		if(event == null) return predicates;
+		if(event == null){
+			predicates.add(cb.equal(root.get("active"), Boolean.TRUE));
+			return predicates;
+		}
 		//删除标记
 		if(StringUtils.isBlank(event.getActiveFlag())
 				||StringUtils.equals("1", event.getActiveFlag())){
@@ -64,7 +67,7 @@ public class EventManageImpl implements EventManage {
 		} else if(StringUtils.equals("0", event.getActiveFlag())){
 			//activeFlag==0:查询已删除记录
 			predicates.add(cb.equal(root.get("active"), Boolean.FALSE));
-		}//其它情况：删除所有记录
+		}//其它情况：查询所有记录
 		
 		//事件类别 
 		if( !StringUtils.isBlank( event.getEventType()))
